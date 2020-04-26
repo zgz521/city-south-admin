@@ -1,0 +1,24 @@
+<div [style.max-height]="divHeight" style="overflow-y: auto;">
+    <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
+      <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="CategoryName">名称</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="必须输入名称">
+          <input nz-input formControlName="CategoryName" id="CategoryName" />
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="ParentCategoryId">所属分类</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24">
+          <nz-tree-select style="width: 100%" [nzAllowClear]="true" [nzExpandedKeys]="expandKeys" [nzNodes]="category"
+            nzPlaceHolder="请选择分类" formControlName="ParentCategoryId" id="ParentCategoryId">
+          </nz-tree-select>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item nz-row class="register-area">
+        <nz-form-control [nzSpan]="14" [nzOffset]="6">
+          <button nz-button nzType="primary">提交</button>
+        </nz-form-control>
+      </nz-form-item>
+    </form>
+  </div>
+  

@@ -47,6 +47,7 @@ import { StorageCheckComponent } from './storage-check/storage-check.component';
 import { ArticleComponent } from './article/article.component';
 import { ComplainComponent } from './complain/complain.component';
 import { RepairComponent } from './repair/repair.component';
+import { AddEditComponent as GoodsCategoryAddEditComponent } from './goods-category/add-edit/add-edit.component';
 
 @NgModule({
   declarations: [
@@ -95,7 +96,8 @@ import { RepairComponent } from './repair/repair.component';
     StorageCheckComponent,
     ArticleComponent,
     ComplainComponent,
-    RepairComponent
+    RepairComponent,
+    GoodsCategoryAddEditComponent
   ],
   imports: [
     ShareModule,

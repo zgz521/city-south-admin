@@ -1,4 +1,4 @@
-import { NgModule, Component } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { MainComponent } from './main.component';
 import { IndexComponent } from './index/index.component';
@@ -38,6 +38,7 @@ import { EmployeeComponent } from './employee/employee.component';
 import { AddEditComponent as EmployeeAddEditComponent } from './employee/add-edit/add-edit.component';
 import { WorkPlanComponent } from './work-plan/work-plan.component';
 import { GoodsCategoryComponent } from './goods-category/goods-category.component';
+import { AddEditComponent as GoodsCategoryAddEditComponent } from './goods-category/add-edit/add-edit.component';
 import { GoodsComponent } from './goods/goods.component';
 import { StorageComponent } from './storage/storage.component';
 import { StorageInComponent } from './storage-in/storage-in.component';
@@ -68,10 +69,10 @@ const routes: Routes = [
       { path: 'employee', component: EmployeeComponent, children: [{ path: 'add-edit', component: EmployeeAddEditComponent }] },
       { path: 'work-plan', component: WorkPlanComponent },
       //库存
-      { path: 'goods-category', component: GoodsCategoryComponent },
+      { path: 'goods-category', component: GoodsCategoryComponent, children: [{ path: 'add-edit', component: GoodsCategoryAddEditComponent }] },
       { path: 'goods', component: GoodsComponent },
-      { path: 'storage', component:  StorageComponent},
-      { path: 'storage-in', component: StorageInComponent},
+      { path: 'storage', component: StorageComponent },
+      { path: 'storage-in', component: StorageInComponent },
       { path: 'storage-out', component: StorageOutComponent },
       { path: 'storage-check', component: StorageCheckComponent },
       //业主
