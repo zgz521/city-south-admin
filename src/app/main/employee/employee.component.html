@@ -1,0 +1,76 @@
+<div class="list-title">员工管理</div>
+<div class="list-search">
+  <nz-tree-select style="width: 200px; margin-right: 10px;" [nzAllowClear]="true" [nzNodes]="category"
+    nzPlaceHolder="请选择岗位" [(ngModel)]="selectData['FkId']">
+  </nz-tree-select>
+  <nz-select style="width:200px;" nzShowSearch nzAllowClear nzPlaceHolder="选择项目" [(ngModel)]="selectData['Fk2Id']">
+    <nz-option *ngFor="let estateItem of estatelist" [nzLabel]="estateItem['EstateName']"
+      [nzValue]="estateItem['EstateId']"></nz-option>
+  </nz-select>
+  <div class="input-search">
+    <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
+      <input type="text" [(ngModel)]="selectData['KeyWord']" nz-input placeholder="关键字" />
+    </nz-input-group>
+    <ng-template #suffixIconButton>
+      <button nz-button nzType="primary" nzSearch (click)="search()"><i nz-icon nzType="search"></i></button>
+    </ng-template>
+  </div>
+  <button nz-button nzType="primary" (click)="addEdit()">新增员工</button>
+</div>
+<nz-table class="table-list table-list-scroll-x" #headerTable [nzData]="datalist" [nzTotal]="TotalCount"
+  [(nzPageIndex)]="PageIndex" [(nzPageSize)]="PageSize" [nzShowSizeChanger]="true" [nzPageSizeOptions]="[10, 15, 20]"
+  [nzLoading]="isLoading" [nzBordered]="false" [nzNoResult]="'暂无数据'" [nzFrontPagination]="false"
+  (nzPageIndexChange)="getlist()" (nzPageSizeChange)="getlist()" [nzScroll]="{ x: '1600px' }">
+  <thead>
+    <tr>
+      <th nzAlign="center" nzWidth="50px" nzLeft="0px">序号</th>
+      <th nzAlign="left" nzWidth="160px" nzLeft="50px">岗位</th>
+      <th nzAlign="center" nzWidth="100px" nzLeft="210px">小区</th>
+      <th nzAlign="center" nzWidth="80px" nzLeft="310px">姓名</th>
+      <th nzAlign="center" nzWidth="70px">性别</th>
+      <th nzAlign="center" nzWidth="160px">身份证号</th>
+      <th nzAlign="center" nzWidth="100px">学历</th>
+      <th nzAlign="center" nzWidth="150px">家庭住址</th>
+      <th nzAlign="center" nzWidth="100px">手机</th>
+      <th nzAlign="center" nzWidth="100px">紧急联系人</th>
+      <th nzAlign="center" nzWidth="100px">联系电话</th>
+      <th nzAlign="center" nzWidth="100px">入职时间</th>
+      <th nzAlign="center" nzWidth="100px">离职时间</th>
+      <th nzAlign="left" nzWidth="150px">备注</th>
+      <th nzAlign="center" nzWidth="80px" nzRight="0px">编辑</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let item of headerTable.data; let no = index;" [class.trdisabled]="item['QuitDate']"
+      (dblclick)="addEdit(no)">
+      <td nzAlign="center" nzLeft="0px">{{(PageIndex - 1) * PageSize + no + 1}}</td>
+      <td nzAlign="left" nzLeft="50px">
+        <div class="remark" style="width: 144px;" nz-tooltip
+          [nzTooltipTitle]="postNames[item['PostId']]">
+          {{postNames[item['PostId']]}}</div>
+      </td>
+      <td nzAlign="center" nzLeft="210px">{{estateNamse[item['EstateId']]}}</td>
+      <td nzAlign="center" nzLeft="310px">{{item['EmployeeName']}}</td>
+      <td nzAlign="center">{{item['Sex']}}</td>
+      <td nzAlign="center">{{item['CardId']}}</td>
+      <td nzAlign="center">{{item['Education']}}</td>
+      <td nzAlign="center">
+        <div class="remark" style="width: 134px;" nz-tooltip [nzTooltipTitle]="item['Address'].split('|').join('')">
+          {{item['Address'].split('|').join('')}}</div>
+      </td>
+      <td nzAlign="center">{{item['Phone']}}</td>
+      <td nzAlign="center">{{item['UrgentContactName']}}</td>
+      <td nzAlign="center">{{item['UrgentContactPhone']}}</td>
+      <td nzAlign="center">{{item['EntryDate']  | date:'yyyy-MM-dd'}}</td>
+      <td nzAlign="center">{{item['QuitDate']  | date:'yyyy-MM-dd'}}</td>
+      <td nzAlign="left">
+        <div class="remark" style="width: 134px;" nz-tooltip [nzTooltipTitle]="item['Remark']">{{item['Remark']}}</div>
+      </td>
+      <td nzAlign="center" nzRight="0px">
+        <a (click)="addEdit(no)"><i nz-icon nzType="edit" nzTheme="outline"></i></a>
+        <nz-divider nzType="vertical"></nz-divider>
+        <a (click)="delete(item['EmployeeId'])"><i nz-icon nzType="delete" nzTheme="outline"></i></a>
+      </td>
+    </tr>
+  </tbody>
+</nz-table>

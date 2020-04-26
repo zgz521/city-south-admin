@@ -1,0 +1,117 @@
+<div [style.max-height]="divHeight" style="overflow-y: auto;">
+  <table class="edit-table">
+    <tbody>
+      <tr>
+        <td class="edit-td-title">项目名称</td>
+        <td class="edit-td-content">
+          <input nz-input placeholder="项目名称" [(ngModel)]="data['EstateName']" [disabled]="true" />
+        </td>
+        <td class="edit-td-title">业主房号</td>
+        <td class="edit-td-content">
+          <input nz-input placeholder="业主房号" [ngModel]="data['HouseNo'] + '(' + data['CheckInName'] + ')'"
+            [disabled]="true" />
+        </td>
+      </tr>
+      <tr>
+        <td class="edit-td-title">房屋类型</td>
+        <td class="edit-td-content">
+          <input nz-input placeholder="房屋类型" [(ngModel)]="data['HouseType']" [disabled]="true" />
+        </td>
+        <td class="edit-td-title">建筑面积</td>
+        <td class="edit-td-content">
+          <input nz-input placeholder="建筑面积" [(ngModel)]="data['Floorage']" [disabled]="true" />
+        </td>
+      </tr>
+      <tr>
+        <td class="edit-td-title">房屋户型</td>
+        <td class="edit-td-content">
+          <input nz-input placeholder="房屋户型" [(ngModel)]="data['Model']" [disabled]="true" />
+        </td>
+        <td class="edit-td-title">到期时间</td>
+        <td class="edit-td-content">
+          <nz-date-picker nzDisabled [(ngModel)]="data['PropertyExpireDate']"></nz-date-picker>
+        </td>
+      </tr>
+      <tr>
+        <td class="edit-td-title">缴费版本</td>
+        <td class="edit-td-content">
+          <nz-select [nzDisabled]="true" style="width:100%;" nzPlaceHolder="选择缴费版本"
+            [(ngModel)]="data['property']['ConfigId']">
+            <nz-option *ngFor="let config of configList" [nzLabel]="config['ConfigVersion']"
+              [nzValue]="config['ConfigId']"></nz-option>
+          </nz-select>
+        </td>
+        <td class="edit-td-title">缴费月数</td>
+        <td class="edit-td-content">
+          <nz-input-number [disabled]="true" [(ngModel)]="data['property']['MonthCount']" [nzMin]="1" [nzMax]="100" [nzStep]="1">
+          </nz-input-number> <span style="color: red;">{{disCountText}}</span>
+        </td>
+      </tr>
+      <tr>
+        <td class="edit-td-title">费用单价</td>
+        <td class="edit-td-content">
+          <input style="width: 80px;" nz-input placeholder="费用单价" [(ngModel)]="data['property']['UnitPrice']"
+            [disabled]="true" />
+          {{data['UnitName']}}
+        </td>
+        <td class="edit-td-title">应缴金额</td>
+        <td class="edit-td-content">
+          <input nz-input placeholder="应缴金额" [(ngModel)]="data['property']['Amount']" [disabled]="true" />
+        </td>
+      </tr>
+      <tr>
+        <td class="edit-td-title">起始日期</td>
+        <td class="edit-td-content">
+          <nz-date-picker nzDisabled [(ngModel)]="data['property']['StartDate']"></nz-date-picker>
+        </td>
+        <td class="edit-td-title">结束日期</td>
+        <td class="edit-td-content">
+          <nz-date-picker nzDisabled [(ngModel)]="data['property']['EndDate']"></nz-date-picker>
+        </td>
+      </tr>
+      <tr>
+        <td class="edit-td-title">收据号码</td>
+        <td class="edit-td-content">
+          <input nz-tooltip nzTooltipTrigger="null" nzTooltipPlacement="topLeft" [nzVisible]="errors['receipt']"
+            nzTooltipTitle="收据号码输入错误" [class.error]="errors['receipt']" nz-input placeholder="收据号码"
+            [(ngModel)]="data['property']['ReceiptNo']" (ngModelChange)="checkValue($event, 'receipt')" />
+        </td>
+        <td class="edit-td-title">凭证号码</td>
+        <td class="edit-td-content">
+          <input nz-tooltip nzTooltipTrigger="null" nzTooltipPlacement="topLeft" [nzVisible]="errors['voucher']"
+            nzTooltipTitle="凭证号码输入错误" [class.error]="errors['voucher']" nz-input placeholder="凭证号码"
+            [(ngModel)]="data['property']['VoucherNo']" (ngModelChange)="checkValue($event, 'voucher')" />
+        </td>
+      </tr>
+      <tr>
+        <td class="edit-td-title">缴费方式</td>
+        <td class="edit-td-content">
+          <nz-select style="width: 100%;;" nzPlaceHolder="选择缴费方式" [(ngModel)]="data['property']['PayWay']">
+            <nz-option nzLabel="现金支付" nzValue="现金支付"></nz-option>
+            <nz-option nzLabel="刷卡支付" nzValue="刷卡支付"></nz-option>
+            <nz-option nzLabel="微信支付" nzValue="微信支付"></nz-option>
+            <nz-option nzLabel="支付宝支付" nzValue="支付宝支付"></nz-option>
+            <nz-option nzLabel="其它支付" nzValue="其它支付"></nz-option>
+          </nz-select>
+        </td>
+        <td class="edit-td-title">缴费状态</td>
+        <td class="edit-td-content">
+          <span *ngIf="data['property']['Status'] === -1">已作廢</span>
+          <nz-switch *ngIf="data['property']['Status'] !== -1" [nzDisabled]="data['property']['Status'] === 1"
+            [(ngModel)]="data['IsPay']" nzCheckedChildren="已缴费" nzUnCheckedChildren="未缴费"></nz-switch>
+        </td>
+      </tr>
+      <tr>
+        <td class="edit-td-title">备注</td>
+        <td class="edit-td-content" colspan="3">
+          <textarea rows="3" nz-input [(ngModel)]="data['property']['Remark']"></textarea>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="edit-footer">
+    <button nz-button (click)="cancel();" nzType="default">取 消</button>
+    <button *ngIf="data['property']['Status'] !== -1" nz-button [nzLoading]="isLoading" (click)="handleOk();"
+      nzType="primary">提 交</button>
+  </div>
+</div>

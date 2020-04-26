@@ -1,0 +1,43 @@
+<div id="container">
+  <nav id="nav">
+    <div id="logo"><img src="/assets/images/logo.png" /></div>
+    <h3>管理系统V1.0</h3>
+    <h5>城南房地产开发有限公司</h5>
+    <div class="menuitem" *ngFor="let item of menus; let no = index;" (click)="changeMenu(no)"
+      [class.active]="menuIndex == no">
+      <div class="icon"><i nz-icon [nzType]="item['icon']"></i></div>
+      <div class="name">{{item['name']}}</div>
+    </div>
+  </nav>
+  <div id="main">
+    <div id="topbar">
+      <div>
+        <a nz-dropdown [nzDropdownMenu]="menu">
+          <i nz-icon nzType="user"></i>
+          <span>{{loginname}}</span>
+          <i style="font-size: 14px; margin-left: 2px;" nz-icon nzType="down"></i>
+        </a>
+        <nz-dropdown-menu #menu="nzDropdownMenu">
+          <ul nz-menu nzSelectable>
+            <li nz-menu-item (click)="changePassword();">修改密码</li>
+          </ul>
+        </nz-dropdown-menu>
+      </div>
+      <div class="point" (click)="loginout()">
+        <i nz-icon nzType="logout"></i>
+        <span>退出</span>
+      </div>
+    </div>
+    <div id="maincontent">
+      <div *ngIf="menus[menuIndex]['children'].length > 0" id="leftbar">
+        <ul>
+          <li *ngFor="let item of menus[menuIndex]['children'];" [routerLink]="[item['link']]"
+            [routerLinkActive]="['active']">{{item['name']}}</li>
+        </ul>
+      </div>
+      <div class="{{menus[menuIndex]['children'].length > 0 ? 'pagecontent' : 'pagecontent-max'}}">
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+  </div>
+</div>

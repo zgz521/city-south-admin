@@ -1,0 +1,27 @@
+<div class="list-title">系统角色管理</div>
+<div class="list-search">
+  <button nz-button nzType="primary" (click)="addEdit(-1)">添加新角色</button>
+</div>
+<nz-table class="table-list table-list-scroll" #headerTable [nzShowPagination]="false" [nzData]="datalist" [nzLoading]="isLoading"
+  [nzBordered]="false" [nzScroll]="{y: 'calc(100% - 53.5px)' }">
+  <thead>
+    <tr>
+      <th nzAlign="center" nzWidth="60px">序号</th>
+      <th nzAlign="center" nzWidth="200px">名称</th>
+      <th nzAlign="left">备注</th>
+      <th nzAlign="center" nzWidth="200px">处理</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let item of headerTable.data; let no = index;" (dblclick)="addEdit(no)">
+      <td nzAlign="center">{{no + 1}}</td>
+      <td nzAlign="center">{{item['RoleName']}}</td>
+      <td nzAlign="left">{{item['Remark']}}</td>
+      <td nzAlign="center">
+        <a (click)="addEdit(no)"><i nz-icon nzType="edit" nzTheme="outline"></i></a>
+        <nz-divider nzType="vertical"></nz-divider>
+        <a (click)="delete(item['RoleId'])"><i nz-icon nzType="delete" nzTheme="outline"></i></a>
+      </td>
+    </tr>
+  </tbody>
+</nz-table>

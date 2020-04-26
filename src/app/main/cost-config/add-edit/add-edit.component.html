@@ -1,0 +1,89 @@
+<form [style.max-height]="divHeight" style="overflow-y: auto;" nz-form [formGroup]="validateForm"
+  (ngSubmit)="submitForm()">
+  <nz-form-item>
+    <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="EstateId">项目名称</nz-form-label>
+    <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="必须选择项目">
+      <nz-select style="width:200px;" nzShowSearch nzPlaceHolder="选择项目" formControlName="EstateId" id="EstateId">
+        <nz-option *ngFor="let estateItem of estateList" [nzLabel]="estateItem['EstateName']"
+          [nzValue]="estateItem['EstateId']"></nz-option>
+      </nz-select>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="ConfigType">费用分类</nz-form-label>
+    <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="必须选择一个分类">
+      <nz-select style="width:200px;" nzShowSearch nzPlaceHolder="选择分类" formControlName="ConfigType" id="ConfigType"
+        (ngModelChange)="changeConfigType($event);">
+        <nz-option *ngFor="let typeItem of configTypeList" [nzLabel]="typeItem['name']" [nzValue]="typeItem['key']">
+        </nz-option>
+      </nz-select>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="ConfigVersion">配置版本</nz-form-label>
+    <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="必须填写配置版本">
+      <input nz-input formControlName="ConfigVersion" id="ConfigVersion" />
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="UnitPrice">单价</nz-form-label>
+    <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="价格填写错误">
+      <input nz-input formControlName="UnitPrice" id="UnitPrice" />
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="UnitName">单位</nz-form-label>
+    <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="必须填写单价单位">
+      <input nz-input formControlName="UnitName" id="UnitName" />
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="IsDefault">默认</nz-form-label>
+    <nz-form-control [nzSm]="14" [nzXs]="24">
+      <nz-switch formControlName="IsDefault" id="IsDefault"></nz-switch>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="IsAble">启用</nz-form-label>
+    <nz-form-control [nzSm]="14" [nzXs]="24">
+      <nz-switch formControlName="IsAble" id="IsAble"></nz-switch>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item *ngIf="isDiscount">
+    <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="ConfigType">优惠模式</nz-form-label>
+    <nz-form-control [nzSm]="14" [nzXs]="24">
+      <nz-select style="width:200px;" nzShowSearch nzPlaceHolder="选择优惠模式" formControlName="DiscountMode"
+        id="DiscountMode" (ngModelChange)="changeDiscountMode($event)">
+        <nz-option nzLabel="一次性现金优惠" nzValue="cash"></nz-option>
+        <nz-option nzLabel="倍数重复现金优惠" nzValue="cashMultiple"></nz-option>
+        <nz-option nzLabel="一次性期限优惠" nzValue="time"></nz-option>
+        <nz-option nzLabel="倍数重复期限优惠" nzValue="timeMultiple"></nz-option>
+      </nz-select>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item *ngIf="isDiscount">
+    <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="Quantity">满足条件</nz-form-label>
+    <nz-form-control [nzSm]="14" [nzXs]="24">
+      <nz-input-number formControlName="Quantity" id="Quantity" [nzMin]="1" [nzMax]="36" [nzStep]="1"></nz-input-number>
+      月
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item *ngIf="isDiscount">
+    <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="Amount">满足优惠</nz-form-label>
+    <nz-form-control [nzSm]="14" [nzXs]="24">
+      <nz-input-number formControlName="Amount" id="Amount" [nzMin]="1" [nzMax]="10000" [nzStep]="1"></nz-input-number>
+      {{discountUnit[discountMode]}}
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="Remark">备注</nz-form-label>
+    <nz-form-control [nzSm]="14" [nzXs]="24">
+      <input nz-input formControlName="Remark" id="Remark" />
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item nz-row class="register-area">
+    <nz-form-control [nzSpan]="14" [nzOffset]="6">
+      <button nz-button nzType="primary">提交</button>
+    </nz-form-control>
+  </nz-form-item>
+</form>

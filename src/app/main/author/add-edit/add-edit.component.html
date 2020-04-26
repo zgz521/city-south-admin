@@ -1,0 +1,37 @@
+<form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
+  <nz-form-item>
+    <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="AuthorName">资源名称</nz-form-label>
+    <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="资源名称必填">
+      <input nz-input formControlName="AuthorName" id="AuthorName" />
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="MenuLink">菜单链接</nz-form-label>
+    <nz-form-control [nzSm]="14" [nzXs]="24">
+      <input nz-input formControlName="MenuLink" id="MenuLink" />
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="MenuIcon">菜单图标</nz-form-label>
+    <nz-form-control [nzSm]="14" [nzXs]="24">
+      <input nz-input formControlName="MenuIcon" id="MenuIcon" />
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="AuthorKey">权限KEY</nz-form-label>
+    <nz-form-control [nzSm]="14" [nzXs]="24">
+      <input nz-input formControlName="AuthorKey" id="AuthorKey" />
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="Sort">资源顺序</nz-form-label>
+    <nz-form-control [nzSm]="14" [nzXs]="24">
+      <nz-input-number [nzMin]="1" [nzMax]="100" [nzStep]="1" formControlName="Sort" id="Sort"></nz-input-number>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item nz-row class="register-area">
+    <nz-form-control [nzSpan]="14" [nzOffset]="6">
+      <button nz-button nzType="primary">提交</button>
+    </nz-form-control>
+  </nz-form-item>
+</form>

@@ -1,0 +1,65 @@
+<form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
+  <nz-form-item>
+    <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="LoginName">账户名</nz-form-label>
+    <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="必须输入账户名">
+      <input nz-input formControlName="LoginName" id="LoginName" />
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="UserName">姓名</nz-form-label>
+    <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="请填写管理员姓名">
+      <input nz-input formControlName="UserName" id="UserName" />
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="Sex">性别</nz-form-label>
+    <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="请选择性别">
+      <nz-select nzAllowClear nzPlaceHolder="请选择" formControlName="Sex" id="Sex">
+        <nz-option nzValue="男" nzLabel="男"></nz-option>
+        <nz-option nzValue="女" nzLabel="女"></nz-option>
+      </nz-select>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSm]="6" [nzXs]="24" [nzRequired]="isVerfyPassword" nzFor="Password">密码</nz-form-label>
+    <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="必须输入用户密码">
+      <nz-input-group [nzSuffix]="suffixTemplate">
+        <input [type]="passwordVisible ? 'text' : 'password'" nz-input placeholder="请输入密码" formControlName="Password"
+          id="Password" />
+      </nz-input-group>
+      <ng-template #suffixTemplate>
+        <i nz-icon [nzType]="passwordVisible ? 'eye-invisible' : 'eye'"
+          (click)="passwordVisible = !passwordVisible"></i>
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="Phone">手机</nz-form-label>
+    <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="手机输入错误">
+      <input nz-input formControlName="Phone" id="Phone" />
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="Email">邮箱</nz-form-label>
+    <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="邮箱输入错误">
+      <input nz-input formControlName="Email" id="Email" />
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="Roles">角色</nz-form-label>
+    <nz-form-control [nzSm]="14" [nzXs]="24">
+      <nz-checkbox-group formControlName="Roles" id="Roles"></nz-checkbox-group>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="Estates">小区</nz-form-label>
+    <nz-form-control [nzSm]="14" [nzXs]="24">
+      <nz-checkbox-group formControlName="Estates" id="Estates"></nz-checkbox-group>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item nz-row class="register-area">
+    <nz-form-control [nzSpan]="14" [nzOffset]="6">
+      <button nz-button nzType="primary">提交</button>
+    </nz-form-control>
+  </nz-form-item>
+</form>

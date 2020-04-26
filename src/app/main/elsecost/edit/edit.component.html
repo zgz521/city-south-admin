@@ -1,0 +1,84 @@
+<div [style.max-height]="divHeight" style="overflow-y: auto;">
+  <table class="edit-table">
+    <tbody>
+      <tr>
+        <td class="edit-td-title">项目名称</td>
+        <td class="edit-td-content">{{data['EstateName']}}</td>
+        <td class="edit-td-title">业主房号</td>
+        <td class="edit-td-content">{{data['HouseNo']}}({{data['CheckInName']}})</td>
+      </tr>
+      <tr>
+        <td class="edit-td-title">费用类别</td>
+        <td class="edit-td-content">
+          <nz-select [disabled]="data['elseCost']['Status'] !== 0" style="width: 100%;;" nzPlaceHolder="费用类别" [(ngModel)]="data['elseCost']['CostName']">
+            <nz-option nzLabel="电梯卡" nzValue="电梯卡"></nz-option>
+            <nz-option nzLabel="卫生费" nzValue="卫生费"></nz-option>
+            <nz-option nzLabel="其它" nzValue="其它"></nz-option>
+          </nz-select>
+          <!-- <input [disabled]="data['elseCost']['Status'] !== 0" placeholder="费用类别" nz-input [(ngModel)]="data['elseCost']['CostName']" [nzAutocomplete]="auto" />
+          <nz-autocomplete nzBackfill #auto>
+            <nz-auto-option *ngFor="let option of costNames" [nzValue]="option">
+              {{ option }}
+            </nz-auto-option>
+          </nz-autocomplete> -->
+        </td>
+        <td class="edit-td-title">缴费金额</td>
+        <td class="edit-td-content">
+          <input [disabled]="data['elseCost']['Status'] !== 0" nz-input placeholder="缴费金额" [(ngModel)]="data['elseCost']['Amount']" />
+        </td>
+      </tr>
+      <tr>
+        <td class="edit-td-title">起始日期</td>
+        <td class="edit-td-content">
+          <nz-date-picker [nzDisabled]="data['elseCost']['Status'] !== 0" [(ngModel)]="data['elseCost']['StartDate']"></nz-date-picker>
+        </td>
+        <td class="edit-td-title">结束日期</td>
+        <td class="edit-td-content">
+          <nz-date-picker [nzDisabled]="data['elseCost']['Status'] !== 0" [(ngModel)]="data['elseCost']['EndDate']"></nz-date-picker>
+        </td>
+      </tr>
+      <tr>
+        <td class="edit-td-title">收据号码</td>
+        <td class="edit-td-content">
+          <input nz-tooltip nzTooltipTrigger="null" nzTooltipPlacement="topLeft" [nzVisible]="errors['receipt']"
+            nzTooltipTitle="收据号码输入错误" [class.error]="errors['receipt']" nz-input placeholder="收据号码"
+            [(ngModel)]="data['elseCost']['ReceiptNo']" (ngModelChange)="checkValue($event, 'receipt')" />
+        </td>
+        <td class="edit-td-title">凭证号码</td>
+        <td class="edit-td-content">
+          <input nz-tooltip nzTooltipTrigger="null" nzTooltipPlacement="topLeft" [nzVisible]="errors['voucher']"
+            nzTooltipTitle="凭证号码输入错误" [class.error]="errors['voucher']" nz-input placeholder="凭证号码"
+            [(ngModel)]="data['elseCost']['VoucherNo']" (ngModelChange)="checkValue($event, 'voucher')" />
+        </td>
+      </tr>
+      <tr>
+        <td class="edit-td-title">缴费方式</td>
+        <td class="edit-td-content">
+          <nz-select style="width: 100%;;" nzPlaceHolder="选择缴费方式" [(ngModel)]="data['elseCost']['PayWay']">
+            <nz-option nzLabel="现金支付" nzValue="现金支付"></nz-option>
+            <nz-option nzLabel="刷卡支付" nzValue="刷卡支付"></nz-option>
+            <nz-option nzLabel="微信支付" nzValue="微信支付"></nz-option>
+            <nz-option nzLabel="支付宝支付" nzValue="支付宝支付"></nz-option>
+            <nz-option nzLabel="其它支付" nzValue="其它支付"></nz-option>
+          </nz-select>
+        </td>
+        <td class="edit-td-title">缴费状态</td>
+        <td class="edit-td-content">
+          <span *ngIf="data['elseCost']['Status'] === -1">已作廢</span>
+          <nz-switch *ngIf="data['elseCost']['Status'] !== -1" [nzDisabled]="data['elseCost']['Status'] === 1"
+            [(ngModel)]="data['IsPay']" nzCheckedChildren="已缴费" nzUnCheckedChildren="未缴费"></nz-switch>
+        </td>
+      </tr>
+      <tr>
+        <td class="edit-td-title">备注</td>
+        <td class="edit-td-content" colspan="3">
+          <textarea rows="3" nz-input [(ngModel)]="data['elseCost']['Remark']"></textarea>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="edit-footer">
+    <button nz-button (click)="cancel();" nzType="default">取 消</button>
+    <button nz-button *ngIf="data['elseCost']['Status'] !== -1" [nzLoading]="isLoading" (click)="handleOk();" nzType="primary">提 交</button>
+  </div>
+</div>

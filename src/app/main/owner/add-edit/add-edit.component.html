@@ -1,0 +1,137 @@
+<div [style.max-height]="divHeight" style="overflow-y: auto;">
+  <table class="edit-table">
+    <tbody>
+      <tr>
+        <td class="edit-td-title">项目名称</td>
+        <td class="edit-td-content">{{houseInfo['EstateName']}}</td>
+        <td class="edit-td-title">房屋房号</td>
+        <td class="edit-td-content">{{houseInfo['HouseNo']}}</td>
+      </tr>
+      <tr>
+        <td class="edit-td-title">房屋户型</td>
+        <td class="edit-td-content">{{houseInfo['Model']}}</td>
+        <td class="edit-td-title">建筑面积</td>
+        <td class="edit-td-content">{{houseInfo['Floorage']}}</td>
+      </tr>
+      <tr>
+        <td class="edit-td-title">业主姓名</td>
+        <td class="edit-td-content">
+          <input nz-input placeholder="业主姓名" [(ngModel)]="data['OwnerName']" />
+        </td>
+        <td class="edit-td-title">缴费人姓名</td>
+        <td class="edit-td-content">
+          <input nz-input placeholder="缴费人姓名" [(ngModel)]="data['CheckInName']" />
+        </td>
+      </tr>
+      <tr>
+        <td class="edit-td-title">身份证号</td>
+        <td class="edit-td-content">
+          <input nz-tooltip nzTooltipTrigger="null" nzTooltipPlacement="topLeft" [nzVisible]="errors['cardid']"
+            nzTooltipTitle="身份证号码输入错误" [class.error]="errors['cardid']" nz-input placeholder="身份证号"
+            [(ngModel)]="data['CardId']"  (ngModelChange)="checkValue($event, 'cardid')" />
+        </td>
+        <td class="edit-td-title">联系电话</td>
+        <td class="edit-td-content">
+          <input nz-tooltip nzTooltipTrigger="null" nzTooltipPlacement="topLeft" [nzVisible]="errors['phone']"
+            nzTooltipTitle="联系电话输入错误" [class.error]="errors['phone']" nz-input placeholder="联系电话"
+            [(ngModel)]="data['Phone']"  (ngModelChange)="checkValue($event, 'phone')" />
+        </td>
+      </tr>
+      <tr>
+        <td class="edit-td-title">单位/职业</td>
+        <td class="edit-td-content">
+          <input nz-input placeholder="单位/职业" [(ngModel)]="data['Occupation']" />
+        </td>
+        <td class="edit-td-title">交房日期</td>
+        <td class="edit-td-content">
+          <nz-date-picker [(ngModel)]="data['HandDate']"></nz-date-picker>
+        </td>
+      </tr>
+      <tr>
+        <td class="edit-td-title">物业起始日期</td>
+        <td class="edit-td-content">
+          <nz-date-picker [nzDisabled]="isKeyModify" [(ngModel)]="data['PropertyStartDate']"></nz-date-picker>
+        </td>
+        <td class="edit-td-title">物业到期日期</td>
+        <td class="edit-td-content">
+          <nz-date-picker [nzDisabled]="isKeyModify" [(ngModel)]="data['PropertyExpireDate']"></nz-date-picker>
+        </td>
+      </tr>
+      <tr>
+        <td class="edit-td-title">装修日期</td>
+        <td class="edit-td-content">
+          <nz-date-picker [(ngModel)]="data['RenovationDate']"></nz-date-picker>
+        </td>
+        <td class="edit-td-title">入住日期</td>
+        <td class="edit-td-content">
+          <nz-date-picker [(ngModel)]="data['CheckInDate']"></nz-date-picker>
+        </td>
+      </tr>
+      <tr>
+        <td class="edit-td-title">常住人口</td>
+        <td class="edit-td-content" colspan="3">
+          <table class="edit-table-list">
+            <tr>
+              <th style="width: 30px;" class="td-button" (click)="setPeople(-1);">+</th>
+              <th>姓名</th>
+              <th>性别</th>
+              <th>关系</th>
+              <th>电话</th>
+              <th>备注</th>
+            </tr>
+            <tr *ngFor="let item of data['FamilyList']; let no = index;">
+              <td class="td-button" (click)="setPeople(no);">-</td>
+              <td><input placeholder="姓名" nz-input nzSize="small" [(ngModel)]="item['PeopleName']" /></td>
+              <td>
+                <nz-select style="width: 60px;" nzSize="small" [(ngModel)]="item['Sex']" nzPlaceHolder="Choose">
+                  <nz-option nzValue="男" nzLabel="男"></nz-option>
+                  <nz-option nzValue="女" nzLabel="女"></nz-option>
+                </nz-select>
+              </td>
+              <td><input placeholder="与业主关系" nz-input nzSize="small" [(ngModel)]="item['Relation']" /></td>
+              <td><input placeholder="电话" nz-input nzSize="small" [(ngModel)]="item['Phone']" /></td>
+              <td><input placeholder="备注" nz-input nzSize="small" [(ngModel)]="item['Remark']" /></td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+      <tr>
+        <td class="edit-td-title">车辆信息</td>
+        <td class="edit-td-content" colspan="3">
+          <table class="edit-table-list">
+            <tr>
+              <th style="width: 30px;" class="td-button" (click)="setCar(-1);">+</th>
+              <th>品牌</th>
+              <th>型号</th>
+              <th>车牌</th>
+              <th>备注</th>
+            </tr>
+            <tr *ngFor="let item of data['CarList']; let no = index;">
+              <td class="td-button" (click)="setCar(no);">-</td>
+              <td><input placeholder="品牌" nz-input nzSize="small" [(ngModel)]="item['Brand']" /></td>
+              <td><input placeholder="型号" nz-input nzSize="small" [(ngModel)]="item['Model']" /></td>
+              <td><input placeholder="车牌" nz-input nzSize="small" [(ngModel)]="item['CarNumber']" /></td>
+              <td><input placeholder="备注" nz-input nzSize="small" [(ngModel)]="item['Remark']" /></td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+      <tr>
+        <td class="edit-td-title">使用信息</td>
+        <td class="edit-td-content" colspan="3">
+          <textarea rows="3" nz-input [(ngModel)]="data['UseInfo']"></textarea>
+        </td>
+      </tr>
+      <tr>
+        <td class="edit-td-title">备注</td>
+        <td class="edit-td-content" colspan="3">
+          <textarea rows="3" nz-input [(ngModel)]="data['Remark']"></textarea>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="edit-footer">
+    <button nz-button (click)="cancel();" nzType="default">取 消</button>
+    <button nz-button [nzLoading]="isLoading" [disabled]="isManage" (click)="handleOk();" nzType="primary">提 交</button>
+  </div>
+</div>

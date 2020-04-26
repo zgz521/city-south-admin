@@ -1,0 +1,33 @@
+<div [style.max-height]="divHeight" style="overflow-y: auto;">
+    <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
+      <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="PostName">名称</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="必须输入名称">
+          <input nz-input formControlName="PostName" id="PostName" />
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="ParentPostId">所属部门</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24">
+          <nz-tree-select style="width: 100%" [nzAllowClear]="true" [nzExpandedKeys]="expandKeys" [nzNodes]="category"
+            nzPlaceHolder="请选择部门" formControlName="ParentPostId" id="ParentPostId">
+          </nz-tree-select>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="PostType">类型</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="请选择类型">
+          <nz-select nzPlaceHolder="请选择" formControlName="PostType" id="PostType">
+            <nz-option nzValue="depart" nzLabel="部门"></nz-option>
+            <nz-option nzValue="post" nzLabel="岗位"></nz-option>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item nz-row class="register-area">
+        <nz-form-control [nzSpan]="14" [nzOffset]="6">
+          <button nz-button nzType="primary">提交</button>
+        </nz-form-control>
+      </nz-form-item>
+    </form>
+  </div>
+  

@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "farming": {
+    "city-south": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -36,7 +36,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/farming",
+            "outputPath": "dist/city-south",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -44,12 +44,19 @@
             "aot": false,
             "assets": [
               "src/favicon.ico",
-              "src/assets"
+              "src/assets",
+              {
+                "glob": "**/*",
+                "input": "./node_modules/@ant-design/icons-angular/src/inline-svg/",
+                "output": "/assets/"
+              }
             ],
             "styles": [
-              "src/styles.less"
+              "src/assets/styles/index.less"
             ],
-            "scripts": []
+            "scripts": [
+              "node_modules/echarts/dist/echarts.min.js"
+            ]
           },
           "configurations": {
             "production": {
@@ -86,18 +93,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "farming:build"
+            "browserTarget": "city-south:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "farming:build:production"
+              "browserTarget": "city-south:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "farming:build"
+            "browserTarget": "city-south:build"
           }
         },
         "test": {
@@ -112,9 +119,11 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.less"
+              "src/assets/styles/index.less"
             ],
-            "scripts": []
+            "scripts": [
+              "node_modules/echarts/dist/echarts.min.js"
+            ]
           }
         },
         "lint": {
@@ -134,15 +143,16 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "farming:serve"
+            "devServerTarget": "city-south:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "farming:serve:production"
+              "devServerTarget": "city-south:serve:production"
             }
           }
         }
       }
-    }},
-  "defaultProject": "farming"
+    }
+  },
+  "defaultProject": "city-south"
 }

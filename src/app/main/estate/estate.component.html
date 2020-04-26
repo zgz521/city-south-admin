@@ -1,0 +1,52 @@
+<button nz-button (click)="addRow($event)" nzType="primary">新建小区</button>
+<nz-table #editRowTable nzBordered [nzShowPagination]="false" [nzData]="datalist">
+  <thead>
+    <tr>
+      <th nzWidth="50px">序号</th>
+      <th nzWidth="120px">小区名称</th>
+      <th nzWidth="300px">小区地址</th>
+      <th>小区介绍</th>
+      <th nzWidth="120px">操作</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let data of editRowTable.data; let no = index;" class="editable-row">
+      <td>{{no + 1}}</td>
+      <td>
+        <div class="editable-cell" *ngIf="editIndex !== no || colIndex !== 1; else editEstateName">
+          <div class="editable-cell-value-wrap" (click)="startEdit(no, 1, $event)">
+            {{ data['EstateName'] }}
+          </div>
+        </div>
+        <ng-template #editEstateName>
+          <input type="text" nz-input [(ngModel)]="data['EstateName']" />
+        </ng-template>
+      </td>
+      <td>
+        <div class="editable-cell" *ngIf="editIndex !== no || colIndex !== 2; else editAddress">
+          <div class="editable-cell-value-wrap" (click)="startEdit(no, 2, $event)">
+            {{ data['Address'] }}
+          </div>
+        </div>
+        <ng-template #editAddress>
+          <input type="text" nz-input [(ngModel)]="data['Address']" />
+        </ng-template>
+      </td>
+      <td>
+        <div class="editable-cell" *ngIf="editIndex !== no || colIndex !== 3; else editIntroduct">
+          <div class="editable-cell-value-wrap" (click)="startEdit(no, 3, $event)">
+            {{ data['Introduct'] }}
+          </div>
+        </div>
+        <ng-template #editIntroduct>
+          <input type="text" nz-input [(ngModel)]="data['Introduct']" />
+        </ng-template>
+      </td>
+      <td>
+        <a nz-popconfirm nzTitle="确定要删除“{{data['EstateName']}}”小区吗?" (nzOnConfirm)="deleteRow(data['EstateId'])">
+          <i nz-icon nzType="delete" nzTheme="outline"></i>
+        </a>
+      </td>
+    </tr>
+  </tbody>
+</nz-table>

@@ -1,0 +1,36 @@
+<div class="list-title">人事部门与岗位管理</div>
+<div class="list-search">
+  <button nz-button nzType="primary" (click)="addEdit(null, 'new')">新增部门</button>
+</div>
+<nz-table class="table-list" #expandTable [nzShowPagination]="false" [nzData]="listOfMapData">
+  <thead>
+    <tr>
+      <th nzWidth="40%">名称</th>
+      <th nzWidth="20%">类型</th>
+      <th>编辑</th>
+    </tr>
+  </thead>
+  <tbody>
+    <ng-container *ngFor="let data of expandTable.data">
+      <ng-container *ngFor="let item of mapOfExpandedData[data.key]">
+        <tr *ngIf="(item.parent && item.parent.expand) || !item.parent" (dblclick)="addEdit(item, 'edit')">
+          <td style="display: flex; flex-direction: row; align-items: center;" [nzIndentSize]="item.level * 20"
+            [nzShowExpand]="!!item.children" [(nzExpand)]="item.expand"
+            (nzExpandChange)="collapse(mapOfExpandedData[data.key], item, $event)">
+            {{ item.title }}
+          </td>
+          <td>{{ types[item['PostType']] }}</td>
+          <td>
+            <a *ngIf="item['PostType'] === 'depart'" (click)="addEdit(item, 'new')">
+              <span nz-tooltip nzTooltipTitle="添加子项目"><i nz-icon nzType="plus" nzTheme="outline"></i></span>
+            </a>
+            <nz-divider *ngIf="item['PostType'] === 'depart'" nzType="vertical"></nz-divider>
+            <a (click)="addEdit(item, 'edit')"><i nz-icon nzType="edit" nzTheme="outline"></i></a>
+            <nz-divider nzType="vertical"></nz-divider>
+            <a (click)="delete(item['PostId'])"><i nz-icon nzType="delete" nzTheme="outline"></i></a>
+          </td>
+        </tr>
+      </ng-container>
+    </ng-container>
+  </tbody>
+</nz-table>

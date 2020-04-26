@@ -1,0 +1,67 @@
+<div [style.max-height]="divHeight" style="overflow-y: auto;">
+    <table class="edit-table">
+      <tbody>
+        <tr>
+          <td class="edit-td-title">项目名称</td>
+          <td class="edit-td-content">
+            <nz-select style="width:100%;" nzPlaceHolder="选择项目" [(ngModel)]="data['EstateId']">
+              <nz-option *ngFor="let estateItem of estateList" [nzLabel]="estateItem['EstateName']"
+                [nzValue]="estateItem['EstateId']"></nz-option>
+            </nz-select>
+          </td>
+          <td class="edit-td-title">业主房号</td>
+          <td class="edit-td-content">
+            <nz-select style="width:100%;" nzShowSearch nzAllowClear [(ngModel)]="data['OwnerId']" nzPlaceHolder="选择房号"
+              [nzServerSearch]="true" (nzOnSearch)="onSearch($event)" (ngModelChange)="onOwnerChange()">
+              <nz-option *ngFor="let owner of ownerList" [nzValue]="owner['OwnerId']"
+                [nzLabel]="owner['HouseNo'] + '(' + owner['OwnerName'] + ')'"></nz-option>
+              <nz-option *ngIf="displayTips" nzDisabled nzCustomContent>
+                至少输入3个字符搜索
+              </nz-option>
+            </nz-select>
+          </td>
+        </tr>
+        <tr>
+          <td class="edit-td-title">房屋类型</td>
+          <td class="edit-td-content">
+            <input nz-input placeholder="房屋类型" [(ngModel)]="owner['HouseType']" [disabled]="true" />
+          </td>
+          <td class="edit-td-title">建筑面积</td>
+          <td class="edit-td-content">
+            <input nz-input placeholder="建筑面积" [(ngModel)]="owner['Floorage']" [disabled]="true" />
+          </td>
+        </tr>
+        <tr>
+          <td class="edit-td-title">房屋户型</td>
+          <td class="edit-td-content">
+            <input nz-input placeholder="房屋户型" [(ngModel)]="owner['Model']" [disabled]="true" />
+          </td>
+          <td class="edit-td-title">物业到期时间</td>
+          <td class="edit-td-content">
+            <nz-date-picker nzDisabled [(ngModel)]="owner['PropertyExpireDate']"></nz-date-picker>
+          </td>
+        </tr>
+        <tr>
+            <td class="edit-td-title">交房时间</td>
+            <td class="edit-td-content">
+                <nz-date-picker [(ngModel)]="data['HandDate']"></nz-date-picker>
+            </td>
+            <td class="edit-td-title">物业开始时间</td>
+            <td class="edit-td-content">
+              <nz-date-picker [(ngModel)]="data['PropertyStartDate']"></nz-date-picker>
+            </td>
+          </tr>
+        <tr>
+          <td class="edit-td-title">备注</td>
+          <td class="edit-td-content" colspan="3">
+            <textarea rows="3" nz-input [(ngModel)]="data['Remark']"></textarea>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="edit-footer">
+      <button nz-button (click)="cancel();" nzType="default">取 消</button>
+      <button nz-button [nzLoading]="isLoading" (click)="handleOk();" nzType="primary">提 交</button>
+    </div>
+  </div>
+  

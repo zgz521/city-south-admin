@@ -1,0 +1,64 @@
+<div class="list-title">排班管理</div>
+<div class="list-search">
+  <nz-month-picker style="margin-right: 10px;" nzAllowClear="false" nzPlaceHolder="选择月份" [(ngModel)]="selectData['SearchDate']"
+    (ngModelChange)="getlist()"></nz-month-picker>
+  <nz-select style="width:140px; margin-right: 10px;" nzAllowClear nzPlaceHolder="选择时间"
+    [(ngModel)]="selectData['Fk3Id']" (ngModelChange)="getlist()">
+    <nz-option *ngFor="let curTime of times" [nzLabel]="curTime['TimeStart']+'-'+curTime['TimeEnd']"
+      [nzValue]="curTime['ConfigId']"></nz-option>
+  </nz-select>
+  <nz-tree-select style="width: 200px; margin-right: 10px;" [nzAllowClear]="true" [nzNodes]="category"
+    nzPlaceHolder="请选择岗位" [(ngModel)]="selectData['FkId']" (ngModelChange)="getlist()">
+  </nz-tree-select>
+  <nz-select style="width:200px;" nzAllowClear nzPlaceHolder="选择项目" [(ngModel)]="selectData['Fk2Id']"
+    (ngModelChange)="getlist()">
+    <nz-option *ngFor="let estateItem of estatelist" [nzLabel]="estateItem['EstateName']"
+      [nzValue]="estateItem['EstateId']"></nz-option>
+  </nz-select>
+  <button *ngIf="false" nz-button nzType="primary" (click)="getlist()"><i nz-icon nzType="search"></i></button>
+</div>
+<nz-table class="table-list table-list-scroll-x" #headerTable [nzData]="datalist" [nzLoading]="isLoading"
+  [nzShowPagination]="false" [nzPageSize]="1000" [nzBordered]="true" [nzNoResult]="'暂无数据'"
+  [nzScroll]="{ x: (320 + days.length * 36) + 'px' }">
+  <thead>
+    <tr>
+      <th nzAlign="center" nzWidth="50px" nzLeft="0px">序号</th>
+      <th nzAlign="left" nzWidth="100px" nzLeft="50px">岗位</th>
+      <th nzAlign="left" nzWidth="90px" nzLeft="150px">小区</th>
+      <th nzAlign="left" nzWidth="80px" nzLeft="240px">姓名</th>
+      <th *ngFor="let day of days" nzAlign="center" nzWidth="36px">{{day}}</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let item of headerTable.data; let no = index;">
+      <td nzAlign="center" nzLeft="0px">{{no + 1}}</td>
+      <td nzAlign="left" nzLeft="50px">
+        <div class="remark" style="width: 82px;" nz-tooltip [nzTooltipTitle]="postNames[item['PostId']]">
+          {{postNames[item['PostId']]}}
+        </div>
+      </td>
+      <td nzAlign="left" nzLeft="150px">
+        <div class="remark" style="width: 72px;" nz-tooltip [nzTooltipTitle]="estateNamse[item['EstateId']]">
+          {{estateNamse[item['EstateId']]}}
+        </div>
+      </td>
+      <td nzAlign="left" nzLeft="240px">{{item['EmployeeName']}}</td>
+      <td nz-dropdown [nzDropdownMenu]="menu" nzPlacement="bottomLeft" style="cursor: pointer;"
+        *ngFor="let isWork of item['Works']; let day = index;" nzAlign="center">
+        <i *ngIf="isWork" style="color: green;" nz-icon nzType="check" nzTheme="outline"></i>
+        <nz-dropdown-menu #menu="nzDropdownMenu">
+          <ul nz-menu>
+            <li nz-menu-item *ngFor="let config of times; let configNo = index;"
+              (click)="setWork(item['EmployeeId'], day + 1, !item['WorkTimes'][day][configNo], no, config['ConfigId'], configNo)">
+              <i *ngIf="item['WorkTimes'][day][configNo]" style="color: green;" nz-icon nzType="check"
+                nzTheme="outline"></i>
+              <i *ngIf="!item['WorkTimes'][day][configNo]" style="color: gray;" nz-icon nzType="close"
+                nzTheme="outline"></i>
+              {{config['TimeStart']}}-{{config['TimeEnd']}}
+            </li>
+          </ul>
+        </nz-dropdown-menu>
+      </td>
+    </tr>
+  </tbody>
+</nz-table>

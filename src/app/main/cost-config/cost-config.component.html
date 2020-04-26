@@ -1,0 +1,58 @@
+<div class="list-title">缴费配置管理</div>
+<div class="list-search">
+  <nz-select style="width:200px;" nzShowSearch nzAllowClear nzPlaceHolder="选择项目" [(ngModel)]="EstateId"
+    (ngModelChange)="filter()">
+    <nz-option *ngFor="let estateItem of estatelist" [nzLabel]="estateItem['EstateName']"
+      [nzValue]="estateItem['EstateId']"></nz-option>
+  </nz-select>
+  <button nz-button nzType="primary" (click)="addEdit(-1)">新增缴费</button>
+</div>
+<nz-table class="table-list" #headerTable [nzShowPagination]="true" [nzShowSizeChanger]="true"
+  [nzPageSizeOptions]="[10, 15, 20]" [nzData]="datalist" [nzLoading]="isLoading" [nzBordered]="false">
+  <thead>
+    <tr>
+      <th nzAlign="center" nzWidth="60px">序号</th>
+      <th nzAlign="center" nzWidth="100px">项目名称</th>
+      <th nzAlign="center" nzWidth="80px">分类</th>
+      <th nzAlign="center" nzWidth="100px">版本</th>
+      <th nzAlign="center" nzWidth="80px">单价</th>
+      <th nzAlign="center" nzWidth="80px">单位</th>
+      <th nzAlign="center" nzWidth="140px">优惠模式</th>
+      <th nzAlign="center" nzWidth="100px">满足数量</th>
+      <th nzAlign="center" nzWidth="100px">优惠数量</th>
+      <th nzAlign="center" nzWidth="60px">默认</th>
+      <th nzAlign="center" nzWidth="60px">启用</th>
+      <th nzAlign="left">备注</th>
+      <th nzWidth="120px" nzAlign="center">处理</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let item of headerTable.data; let no = index;" (dblclick)="addEdit(no)">
+      <td nzAlign="center">{{no + 1}}</td>
+      <td nzAlign="center">{{item['EstateName']}}</td>
+      <td nzAlign="center">{{item['config']['Category']}}</td>
+      <td nzAlign="center">{{item['config']['ConfigVersion']}}</td>
+      <td nzAlign="center">{{item['config']['UnitPrice']}}</td>
+      <td nzAlign="center">{{item['config']['UnitName']}}</td>
+      <td nzAlign="center">{{discount[item['config']['DiscountMode']]}}</td>
+      <td nzAlign="center">{{item['config']['Quantity']}}<span
+          *ngIf="item['config']['Quantity'] && item['config']['Quantity'] > 0 && 'parkingproperty'.indexOf(item['config']['ConfigType']) > -1">个月</span>
+      </td>
+      <td nzAlign="center">{{item['config']['Amount']}}{{discountUnit[item['config']['DiscountMode']]}}</td>
+      <td nzAlign="center">
+        <i *ngIf="item['config']['IsDefault']" nz-icon nzType="check" nzTheme="outline"></i>
+        <i *ngIf="!item['config']['IsDefault']" nz-icon nzType="close" nzTheme="outline"></i>
+      </td>
+      <td nzAlign="center">
+        <i *ngIf="item['config']['IsAble']" nz-icon nzType="check" nzTheme="outline"></i>
+        <i *ngIf="!item['config']['IsAble']" nz-icon nzType="close" nzTheme="outline"></i>
+      </td>
+      <td nzAlign="left">{{item['config']['Remark']}}</td>
+      <td nzAlign="center">
+        <a (click)="addEdit(no)"><i nz-icon nzType="edit" nzTheme="outline"></i></a>
+        <nz-divider nzType="vertical"></nz-divider>
+        <a (click)="delete(item['config']['ConfigId'])"><i nz-icon nzType="delete" nzTheme="outline"></i></a>
+      </td>
+    </tr>
+  </tbody>
+</nz-table>

@@ -1,0 +1,72 @@
+<div class="list-title">其他费用缴费管理</div>
+<div class="list-search">
+  <nz-select style="width:200px;" nzShowSearch nzAllowClear nzPlaceHolder="选择项目" [(ngModel)]="selectData['FkId']">
+    <nz-option *ngFor="let estateItem of estatelist" [nzLabel]="estateItem['EstateName']"
+      [nzValue]="estateItem['EstateId']"></nz-option>
+  </nz-select>
+  <nz-select style="width:200px;" nzAllowClear nzPlaceHolder="选择类别" [(ngModel)]="selectData['type']">
+    <nz-option *ngFor="let costItem of costNames;" [nzLabel]="costItem"  [nzValue]="costItem"></nz-option>
+  </nz-select>
+  <div class="input-search">
+    <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
+      <input type="text" [(ngModel)]="selectData['KeyWord']" nz-input placeholder="关键字" />
+    </nz-input-group>
+    <ng-template #suffixIconButton>
+      <button nz-button nzType="primary" nzSearch (click)="search()"><i nz-icon nzType="search"></i></button>
+    </ng-template>
+  </div>
+  <button nz-button nzType="primary" (click)="add()">新增缴费</button>
+</div>
+<nz-table class="table-list table-list-scroll-x" #headerTable [nzData]="datalist" [nzTotal]="TotalCount" [(nzPageIndex)]="PageIndex"
+  [(nzPageSize)]="PageSize" [nzShowSizeChanger]="true" [nzPageSizeOptions]="[10, 15, 20]" [nzLoading]="isLoading"
+  [nzBordered]="false" [nzNoResult]="'暂无数据'" [nzFrontPagination]="false" (nzPageIndexChange)="getlist()" (nzPageSizeChange)="getlist()"
+  [nzScroll]="{ x: '1600px' }">
+  <thead>
+    <tr>
+      <th nzAlign="center" nzWidth="50px" nzLeft="0px">序号</th>
+      <th nzAlign="center" nzWidth="80px" nzLeft="50px">房号</th>
+      <th nzAlign="center" nzWidth="100px" nzLeft="130px">缴费人姓名</th>
+      <th nzAlign="center" nzWidth="100px">业主姓名</th>
+      <th nzAlign="center" nzWidth="100px">项目名称</th>
+      <th nzAlign="center" nzWidth="120px">费用类别</th>
+      <th nzAlign="center" nzWidth="100px">收费金额</th>
+      <th nzAlign="center" nzWidth="140px">缴费时间</th>
+      <th nzAlign="center" nzWidth="100px">服务起始时间</th>
+      <th nzAlign="center" nzWidth="100px">服务结束时间</th>
+      <th nzAlign="center" nzWidth="100px">收据号</th>
+      <th nzAlign="center" nzWidth="100px">凭据号</th>
+      <th nzAlign="center" nzWidth="100px">缴费方式</th>
+      <th nzAlign="left" nzWidth="150px">备注</th>
+      <th nzAlign="center" nzWidth="80px" nzRight="80px">是否缴费</th>
+      <th nzAlign="center"nzWidth="80px" nzRight="0px" >处理</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let item of headerTable.data; let no = index;" (dblclick)="edit(no)">
+      <td nzAlign="center" nzLeft="0px">{{(PageIndex - 1) * PageSize + no + 1}}</td>
+      <td nzAlign="center" nzLeft="50px">{{item['HouseNo']}}</td>
+      <td nzAlign="center" nzLeft="130px">{{item['CheckInName']}}</td>
+      <td nzAlign="center">{{item['OwnerName']}}</td>
+      <td nzAlign="center">{{item['EstateName']}}</td>
+      <td nzAlign="center">{{item['elseCost']['CostName']}}</td>
+      <td nzAlign="center">{{item['elseCost']['Amount']}}</td>
+      <td nzAlign="center">{{item['elseCost']['CreateTime'] | date:'yyyy-MM-dd HH:mm'}}</td>
+      <td nzAlign="center">{{item['elseCost']['StartDate'] | date:'yyyy-MM-dd'}}</td>
+      <td nzAlign="center">{{item['elseCost']['EndDate'] | date:'yyyy-MM-dd'}}</td>
+      <td nzAlign="center">{{item['elseCost']['ReceiptNo']}}</td>
+      <td nzAlign="center">{{item['elseCost']['VoucherNo']}}</td>
+      <td nzAlign="center">{{item['elseCost']['PayWay']}}</td>
+      <td nzAlign="left"><div class="remark" style="width: 134px;" nz-tooltip [nzTooltipTitle]="item['elseCost']['Remark']">{{item['elseCost']['Remark']}}</div></td>
+      <td nzAlign="center" nzRight="80px">
+        <i *ngIf="item['elseCost']['Status'] == 1" nz-icon nzType="check" nzTheme="outline"></i>
+        <i *ngIf="item['elseCost']['Status'] == 0" nz-icon nzType="close" nzTheme="outline"></i>
+        <i *ngIf="item['elseCost']['Status'] == -1" nz-icon nzType="delete" nzTheme="outline"></i>
+      </td>
+      <td nzAlign="center" nzRight="0px">
+        <a (click)="edit(no)"><i nz-icon nzType="edit" nzTheme="outline"></i></a>
+        <nz-divider nzType="vertical"></nz-divider>
+        <a (click)="delete(item['elseCost']['ElseCostId'])"><i nz-icon nzType="delete" nzTheme="outline"></i></a>
+      </td>
+    </tr>
+  </tbody>
+</nz-table>

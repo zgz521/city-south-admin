@@ -1,0 +1,106 @@
+<div class="edit-loading" [style.max-height]="divHeight" style="overflow-y: auto;">
+  <table class="edit-table">
+    <tbody>
+      <tr>
+        <td class="edit-td-title">项目名称</td>
+        <td class="edit-td-content">
+          <nz-select style="width:100%;" nzShowSearch nzAllowClear nzPlaceHolder="选择项目" [(ngModel)]="data['EstateId']">
+            <nz-option *ngFor="let estateItem of estateList" [nzLabel]="estateItem['EstateName']"
+              [nzValue]="estateItem['EstateId']"></nz-option>
+          </nz-select>
+        </td>
+        <td class="edit-td-title">房屋动态</td>
+        <td class="edit-td-content">
+          <input nz-input placeholder="房屋动态" [(ngModel)]="data['News']" />
+        </td>
+      </tr>
+      <tr>
+        <td class="edit-td-title">房屋类型</td>
+        <td class="edit-td-content">
+          <nz-select style="width:100%;" nzPlaceHolder="房屋类型" [(ngModel)]="data['HouseType']">
+            <nz-option nzLabel="住宅" nzValue="住宅"></nz-option>
+            <nz-option nzLabel="产业房" nzValue="产业房"></nz-option>
+          </nz-select>
+        </td>
+        <td class="edit-td-title">房屋结构</td>
+        <td class="edit-td-content">
+          <input nz-input placeholder="房屋结构" [(ngModel)]="data['Structure']" />
+        </td>
+      </tr>
+      <tr>
+        <td class="edit-td-title">联系电话</td>
+        <td class="edit-td-content">
+          <input nz-input placeholder="联系电话" [(ngModel)]="data['ContactTel']" />
+        </td>
+        <td class="edit-td-title">接房日期</td>
+        <td class="edit-td-content">
+          <nz-date-picker [(ngModel)]="data['HandDate']"></nz-date-picker>
+        </td>
+      </tr>
+      <tr>
+        <td class="edit-td-title">是否安置</td>
+        <td class="edit-td-content">
+          <nz-switch [(ngModel)]="data['IsPlace']" nzCheckedChildren="是" nzUnCheckedChildren="否"></nz-switch>
+        </td>
+        <td class="edit-td-title">空置状态</td>
+        <td class="edit-td-content">
+          <nz-switch [(ngModel)]="data['EmptyState']" nzCheckedChildren="是" nzUnCheckedChildren="否"></nz-switch>
+        </td>
+      </tr>
+      <tr>
+        <td class="edit-td-title">起始楼栋</td>
+        <td class="edit-td-content">
+          <nz-input-number [(ngModel)]="data['StartBuilding']" [nzMin]="1" [nzMax]="100" [nzStep]="1"></nz-input-number>
+        </td>
+        <td class="edit-td-title">结束楼栋</td>
+        <td class="edit-td-content">
+          <nz-input-number [(ngModel)]="data['EndBuilding']" [nzMin]="1" [nzMax]="100" [nzStep]="1"></nz-input-number>
+        </td>
+      </tr>
+      <tr>
+        <td class="edit-td-title">起始单元</td>
+        <td class="edit-td-content">
+          <nz-input-number [(ngModel)]="data['StartUnit']" [nzMin]="1" [nzMax]="100" [nzStep]="1"></nz-input-number>
+        </td>
+        <td class="edit-td-title">结束单元</td>
+        <td class="edit-td-content">
+          <nz-input-number [(ngModel)]="data['EndUnit']" [nzMin]="1" [nzMax]="100" [nzStep]="1"></nz-input-number>
+        </td>
+      </tr>
+      <tr>
+        <td class="edit-td-title">起始楼层</td>
+        <td class="edit-td-content">
+          <nz-input-number [(ngModel)]="data['StartFloor']" [nzMin]="1" [nzMax]="100" [nzStep]="1"></nz-input-number>
+        </td>
+        <td class="edit-td-title">结束楼层</td>
+        <td class="edit-td-content">
+          <nz-input-number [(ngModel)]="data['EndFloor']" [nzMin]="1" [nzMax]="100" [nzStep]="1"></nz-input-number>
+        </td>
+      </tr>
+      <tr>
+        <td class="edit-td-title">每层户型</td>
+        <td class="edit-td-content" colspan="3">
+          <table class="edit-table-list">
+            <tr>
+              <th class="td-button" (click)="setModel(-1);">+</th>
+              <th style="width: 60px;">房号</th>
+              <th style="width: 50%;">户型</th>
+              <th>建筑面积</th>
+            </tr>
+            <tr *ngFor="let item of data['ModelList']; let no = index;">
+              <td class="td-button" (click)="setModel(no);">-</td>
+              <td><input [disabled]="true" nz-input nzSize="small" [(ngModel)]="item.HouseNo" /></td>
+              <td><input placeholder="请输入户型名称" nz-input nzSize="small" [(ngModel)]="item.Model" /></td>
+              <td><input placeholder="请输入建筑面积" nz-input nzSize="small" [(ngModel)]="item.Floorage" /></td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="edit-footer">
+    <button nz-button (click)="cancel();" nzType="default">取 消</button>
+    <button nz-button (click)="handleOk();" nzType="primary">提 交</button>
+  </div>
+</div>
+<div *ngIf="isLoading" class="loading-tip"><nz-spin nzSimple></nz-spin></div>

@@ -1,0 +1,45 @@
+<div class="list-title">系统用户管理</div>
+<div class="list-search">
+  <div class="input-search">
+    <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
+      <input type="text" [(ngModel)]="searchText" nz-input placeholder="关键字" />
+    </nz-input-group>
+    <ng-template #suffixIconButton>
+      <button nz-button nzType="primary" nzSearch (click)="search()"><i nz-icon nzType="search"></i></button>
+    </ng-template>
+  </div>
+  <button nz-button nzType="primary" (click)="addEdit(-1)">添加新用户</button>
+</div>
+<nz-table class="table-list table-list-scroll" #headerTable [nzShowPagination]="false" [nzData]="datalist"
+  [nzLoading]="isLoading" [nzBordered]="false" [nzScroll]="{y: 'calc(100% - 53.5px)' }">
+  <thead>
+    <tr>
+      <th nzAlign="center" nzWidth="60px">序号</th>
+      <th nzAlign="center" nzWidth="120px">账号</th>
+      <th nzAlign="center" nzWidth="100px">姓名</th>
+      <th nzAlign="center" nzWidth="60px">性别</th>
+      <th nzAlign="center" nzWidth="120px">手机</th>
+      <th nzAlign="center" nzWidth="180px">邮箱</th>
+      <th nzWidth="140px">创建时间</th>
+      <th nzWidth="140px">最后登录时间</th>
+      <th nzAlign="center">处理</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let item of headerTable.data; let no = index;" (dblclick)="addEdit(no)">
+      <td nzAlign="center">{{no + 1}}</td>
+      <td nzAlign="center">{{item['LoginName']}}</td>
+      <td nzAlign="center">{{item['UserName']}}</td>
+      <td nzAlign="center">{{item['Sex']}}</td>
+      <td nzAlign="center">{{item['Phone']}}</td>
+      <td nzAlign="center">{{item['Email']}}</td>
+      <td>{{item['CreateTime'] | date:'yyyy-MM-dd HH:mm'}}</td>
+      <td>{{item['LastLoginTime'] | date:'yyyy-MM-dd HH:mm'}}</td>
+      <td nzAlign="center">
+        <a (click)="addEdit(no)"><i nz-icon nzType="edit" nzTheme="outline"></i></a>
+        <nz-divider nzType="vertical"></nz-divider>
+        <a (click)="delete(item['UserId'])"><i nz-icon nzType="delete" nzTheme="outline"></i></a>
+      </td>
+    </tr>
+  </tbody>
+</nz-table>

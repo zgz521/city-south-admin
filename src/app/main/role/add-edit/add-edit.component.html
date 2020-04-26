@@ -1,0 +1,22 @@
+<div class="form-edit">
+  <div class="form-item">
+    <label><span>*</span>角色名称：</label>
+    <input nz-input placeholder="角色名称" [(ngModel)]="data['RoleName']" />
+  </div>
+  <div class="form-item">
+    <label>备注：</label>
+    <textarea nz-input rows="3" [(ngModel)]="data['Remark']"></textarea>
+  </div>
+  <div class="form-item">
+    <label>权限：</label>
+    <nz-tabset>
+      <nz-tab *ngFor="let item of authos; let no = index;" [nzTitle]="item['AuthorName']">
+        <nz-checkbox-group [(ngModel)]="authos[no]['options']">
+        </nz-checkbox-group>
+      </nz-tab>
+    </nz-tabset>
+  </div>
+  <div class="form-submit">
+    <button nz-button (click)="submitForm()" nzType="primary">提交</button>
+  </div>
+</div>

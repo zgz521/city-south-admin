@@ -1,0 +1,72 @@
+<div class="list-title">系统资源管理</div>
+<div class="list-search">
+  <button nz-button nzType="primary" (click)="addEdit(-1, -2)">添加新资源</button>
+</div>
+<nz-table class="table-list" #headerTable [nzShowPagination]="false" [nzFrontPagination]="false" [nzData]="datalist" [nzLoading]="isLoading"
+  [nzBordered]="false">
+  <thead>
+    <tr>
+      <th nzShowExpand nzWidth="60px"></th>
+      <th nzAlign="left" nzWidth="60px">序号</th>
+      <th nzAlign="left" nzWidth="140px">名称</th>
+      <th nzAlign="left">链接</th>
+      <th nzAlign="center" nzWidth="140px">图标</th>
+      <th nzAlign="left" nzWidth="180px">权限</th>
+      <th nzAlign="center" nzWidth="60px">排序</th>
+      <th nzAlign="center" nzWidth="200px">处理</th>
+    </tr>
+  </thead>
+  <tbody>
+    <ng-template ngFor let-data let-index="index" [ngForOf]="headerTable.data">
+      <tr (dblclick)="addEdit(index, -1)">
+        <td nzShowExpand [(nzExpand)]="data.expand"></td>
+        <td nzAlign="left">{{index + 1}}</td>
+        <td nzAlign="left">{{data['AuthorName']}}</td>
+        <td nzAlign="left">{{data['MenuLink']}}</td>
+        <td nzAlign="center">{{data['MenuIcon']}}</td>
+        <td nzAlign="left">{{data['AuthorKey']}}</td>
+        <td nzAlign="center">{{data['Sort']}}</td>
+        <td nzAlign="center">
+          <a><i (click)="addEdit(index, -2)" nz-icon nzType="plus" nzTheme="outline"></i></a>
+          <nz-divider nzType="vertical"></nz-divider>
+          <a (click)="addEdit(index, -1)"><i nz-icon nzType="edit" nzTheme="outline"></i></a>
+          <nz-divider nzType="vertical"></nz-divider>
+          <a (click)="delete(data['AuthorId'])"><i nz-icon nzType="delete" nzTheme="outline"></i></a>
+        </td>
+      </tr>
+      <tr [nzExpand]="data.expand">
+        <td></td>
+        <td colspan="7" style="padding: 16px;">
+          <nz-table #childTable [nzShowPagination]="false" [nzFrontPagination]="false" [nzData]="data['children']">
+            <thead>
+              <tr style="display: none;">
+                <th nzAlign="left" nzWidth="60px">序号</th>
+                <th nzAlign="left" nzWidth="140px">名称</th>
+                <th nzAlign="left">链接</th>
+                <th nzAlign="center" nzWidth="140px">图标</th>
+                <th nzAlign="left" nzWidth="180px">权限</th>
+                <th nzAlign="center" nzWidth="60px">排序</th>
+                <th nzAlign="center" nzWidth="200px">处理</th>
+              </tr>
+            </thead>
+  <tbody>
+    <tr *ngFor="let item of childTable.data; let no = index;" (dblclick)="addEdit(index, no)">
+      <td nzAlign="left">{{index + 1}}-{{no + 1}}</td>
+      <td nzAlign="left">{{item['AuthorName']}}</td>
+      <td nzAlign="left">{{item['MenuLink']}}</td>
+      <td nzAlign="center">{{item['MenuIcon']}}</td>
+      <td nzAlign="left">{{item['AuthorKey']}}</td>
+      <td nzAlign="center">{{item['Sort']}}</td>
+      <td nzAlign="center">
+        <a (click)="addEdit(index, no)"><i nz-icon nzType="edit" nzTheme="outline"></i></a>
+        <nz-divider nzType="vertical"></nz-divider>
+        <a (click)="delete(item['AuthorId'])"><i nz-icon nzType="delete" nzTheme="outline"></i></a>
+      </td>
+    </tr>
+  </tbody>
+</nz-table>
+</td>
+</tr>
+</ng-template>
+</tbody>
+</nz-table>

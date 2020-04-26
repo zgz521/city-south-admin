@@ -1,0 +1,110 @@
+<div [style.max-height]="divHeight" style="overflow-y: auto;">
+  <table class="edit-table">
+    <tbody>
+      <tr>
+        <td class="edit-td-title">项目名称</td>
+        <td class="edit-td-content">{{data['EstateName']}}</td>
+        <td class="edit-td-title">业主房号</td>
+        <td class="edit-td-content">{{data['HouseNo']}}({{data['CheckInName']}})</td>
+      </tr>
+      <tr>
+        <td class="edit-td-title">费用类型</td>
+        <td class="edit-td-content">{{data['waterAndE']['FeeName']}}</td>
+        <td class="edit-td-title">缴费月份</td>
+        <td class="edit-td-content">
+          <nz-month-picker [nzDisabled]="data['waterAndE']['Status'] !== 0" [(ngModel)]="data['waterAndE']['FeeDate']"
+            (ngModelChange)="getPreQuantity()" nzPlaceHolder="选择月份">
+          </nz-month-picker>
+        </td>
+      </tr>
+      <tr>
+        <td class="edit-td-title">缴费版本</td>
+        <td class="edit-td-content">
+          <nz-select style="width:100%;" [nzDisabled]="data['waterAndE']['Status'] !== 0" nzPlaceHolder="选择缴费版本"
+            [(ngModel)]="data['waterAndE']['ConfigId']" (ngModelChange)="onConfigChange()">
+            <nz-option *ngFor="let config of configList" [nzLabel]="config['ConfigVersion']"
+              [nzValue]="config['ConfigId']"></nz-option>
+          </nz-select>
+        </td>
+        <td class="edit-td-title">费用单价</td>
+        <td class="edit-td-content">
+          <input style="width: 80px;" nz-input placeholder="费用单价" [(ngModel)]="data['waterAndE']['UnitPrice']"
+            [disabled]="true" />
+          {{data['waterAndE']['UnitName']}}
+        </td>
+      </tr>
+      <tr>
+        <td class="edit-td-title">上月表量</td>
+        <td class="edit-td-content">
+          <nz-input-number [nzDisabled]="data['waterAndE']['Status'] !== 0" [nzFormatter]="formatterWE"
+            [nzParser]="parserWE" [(ngModel)]="data['waterAndE']['LastQuantity']" [nzMin]="0" [nzMax]="1000000"
+            [nzStep]="0.01" [nzPlaceHolder]="'上月表量'" (ngModelChange)="calculateAmount()">
+          </nz-input-number>
+        </td>
+        <td class="edit-td-title">本月表量</td>
+        <td class="edit-td-content">
+          <nz-input-number [nzDisabled]="data['waterAndE']['Status'] !== 0" [(ngModel)]="data['waterAndE']['Quantity']"
+            [nzFormatter]="formatterWE" [nzParser]="parserWE" [nzMin]="0" [nzMax]="1000000" [nzStep]="0.01"
+            [nzPlaceHolder]="'本月表量'" (ngModelChange)="calculateAmount()">
+          </nz-input-number>
+        </td>
+      </tr>
+      <tr>
+        <td class="edit-td-title">本月用量</td>
+        <td class="edit-td-content">
+          <input style="width: 80px;" nz-input placeholder="本月用量"
+            [ngModel]="(data['waterAndE']['Quantity'] - data['waterAndE']['LastQuantity']).toFixed(2)"
+            [disabled]="true" />
+        </td>
+        <td class="edit-td-title">应缴金额</td>
+        <td class="edit-td-content">
+          <input nz-input placeholder="应缴金额" [(ngModel)]="data['waterAndE']['Amount']"
+            [disabled]="true" />
+        </td>
+      </tr>
+      <tr>
+        <td class="edit-td-title">收据号码</td>
+        <td class="edit-td-content">
+          <input nz-tooltip nzTooltipTrigger="null" nzTooltipPlacement="topLeft" [nzVisible]="errors['receipt']"
+            nzTooltipTitle="收据号码输入错误" [class.error]="errors['receipt']" nz-input placeholder="收据号码"
+            [(ngModel)]="data['waterAndE']['ReceiptNo']" (ngModelChange)="checkValue($event, 'receipt')" />
+        </td>
+        <td class="edit-td-title">凭证号码</td>
+        <td class="edit-td-content">
+          <input nz-tooltip nzTooltipTrigger="null" nzTooltipPlacement="topLeft" [nzVisible]="errors['voucher']"
+            nzTooltipTitle="凭证号码输入错误" [class.error]="errors['voucher']" nz-input placeholder="凭证号码"
+            [(ngModel)]="data['waterAndE']['VoucherNo']" (ngModelChange)="checkValue($event, 'voucher')" />
+        </td>
+      </tr>
+      <tr>
+        <td class="edit-td-title">缴费方式</td>
+        <td class="edit-td-content">
+          <nz-select style="width: 100%;;" nzPlaceHolder="选择缴费方式" [(ngModel)]="data['waterAndE']['PayWay']">
+            <nz-option nzLabel="现金支付" nzValue="现金支付"></nz-option>
+            <nz-option nzLabel="刷卡支付" nzValue="刷卡支付"></nz-option>
+            <nz-option nzLabel="微信支付" nzValue="微信支付"></nz-option>
+            <nz-option nzLabel="支付宝支付" nzValue="支付宝支付"></nz-option>
+            <nz-option nzLabel="其它支付" nzValue="其它支付"></nz-option>
+          </nz-select>
+        </td>
+        <td class="edit-td-title">缴费状态</td>
+        <td class="edit-td-content">
+          <span *ngIf="data['waterAndE']['Status'] === -1">已作廢</span>
+          <nz-switch *ngIf="data['waterAndE']['Status'] !== -1" [nzDisabled]="data['waterAndE']['Status'] === 1"
+            [(ngModel)]="data['IsPay']" nzCheckedChildren="已缴费" nzUnCheckedChildren="未缴费"></nz-switch>
+        </td>
+      </tr>
+      <tr>
+        <td class="edit-td-title">备注</td>
+        <td class="edit-td-content" colspan="3">
+          <textarea rows="3" nz-input [(ngModel)]="data['waterAndE']['Remark']"></textarea>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="edit-footer">
+    <button nz-button (click)="cancel();" nzType="default">取 消</button>
+    <button nz-button *ngIf="data['waterAndE']['Status'] !== -1" [nzLoading]="isLoading" (click)="handleOk();"
+      nzType="primary">提 交</button>
+  </div>
+</div>

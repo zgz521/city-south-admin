@@ -1,0 +1,30 @@
+div#container{display: flex; flex-direction: row; height: 100%;}
+/*左侧大菜单*/
+nav#nav{width: 150px; height: 100%; background-color: #1cc098; overflow-y: auto;}
+div#logo{text-align: center; margin-top: 10px; padding: 20px 0px;}
+nav#nav h3,nav#nav h5{text-align: center; color: #fff; padding: 0px; margin: 0px;}
+nav#nav h3{font-size: 18px;}
+nav#nav h5{font-size: 12px; margin-bottom: 20px;}
+div.menuitem{display: flex; flex-direction: column; align-items: center; justify-content: center; height: 80px; color: #fff; cursor: pointer;}
+div.active{background-color: #1ab38c;}
+div.active:after{content: ''; background-color: #fff; width: 5px; height: 80px; position: absolute; left: 0px;}
+div.menuitem > div.icon i{font-size: 28px;}
+div.menuitem > div.name{font-size: 14px;}
+/*右侧*/
+div#main{width: calc(100% - 150px);}
+/*顶部*/
+div#topbar{height: 60px; padding-right: 50px; display: flex; flex-direction: row; align-items: center; justify-content: flex-end;}
+div#topbar > div{margin-left: 20px; height: 100%; display: flex; flex-direction: row; align-items: center;}
+div#topbar i{font-size: 22px;}
+div#topbar span{margin-left: 5px;  font-size: 14px;}
+/*下部*/
+div#maincontent{height: calc(100% - 60px); display:flex; flex-direction: row; background-color: #eee;}
+/*下部左侧子菜单*/
+div#leftbar{width: 120px; height: 100%; background-color: #ddd; overflow-y: auto;}
+div#leftbar > ul{padding: 20px 0px;}
+div#leftbar > ul > li{list-style: none; position: relative; line-height: 40px; text-align: center; cursor: pointer;}
+div#leftbar > ul > li.active{color: #1890ff; background-color: #e6f7ff;}
+div#leftbar > ul > li.active::after{content: ''; position: absolute; top: 0px; right: 0px; bottom: 0px; z-index: 1000; width: 5px; height: 40px; background-color: #1890ff;}
+/*子页面框架*/
+div.pagecontent{width:calc(100% - 120px); height: 100%; padding: 20px; overflow-y: auto;}
+div.pagecontent-max{width:100%; height: 100%; padding: 20px; overflow-y: auto;}

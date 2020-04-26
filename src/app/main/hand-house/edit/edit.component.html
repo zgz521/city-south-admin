@@ -1,0 +1,58 @@
+<div [style.max-height]="divHeight" style="overflow-y: auto;">
+    <table class="edit-table">
+      <tbody>
+        <tr>
+          <td class="edit-td-title">项目名称</td>
+          <td class="edit-td-content">
+            <input nz-input placeholder="项目名称" [(ngModel)]="data['EstateName']" [disabled]="true" />
+          </td>
+          <td class="edit-td-title">业主房号</td>
+          <td class="edit-td-content">
+            <input nz-input placeholder="业主房号" [ngModel]="data['HouseNo'] + '(' + data['OwnerName'] + ')'"
+              [disabled]="true" />
+          </td>
+        </tr>
+        <tr>
+          <td class="edit-td-title">房屋类型</td>
+          <td class="edit-td-content">
+            <input nz-input placeholder="房屋类型" [(ngModel)]="data['HouseType']" [disabled]="true" />
+          </td>
+          <td class="edit-td-title">建筑面积</td>
+          <td class="edit-td-content">
+            <input nz-input placeholder="建筑面积" [(ngModel)]="data['Floorage']" [disabled]="true" />
+          </td>
+        </tr>
+        <tr>
+          <td class="edit-td-title">房屋户型</td>
+          <td class="edit-td-content">
+            <input nz-input placeholder="房屋户型" [(ngModel)]="data['Model']" [disabled]="true" />
+          </td>
+          <td class="edit-td-title">物业到期时间</td>
+          <td class="edit-td-content">
+            <nz-date-picker nzDisabled [(ngModel)]="data['PropertyExpireDate']"></nz-date-picker>
+          </td>
+        </tr>
+        <tr>
+          <td class="edit-td-title">交房日期</td>
+          <td class="edit-td-content">
+            <nz-date-picker [(ngModel)]="data['hand']['HandDate']"></nz-date-picker>
+          </td>
+          <td class="edit-td-title">物业开始日期</td>
+          <td class="edit-td-content">
+            <nz-date-picker [(ngModel)]="data['hand']['PropertyStartDate']"></nz-date-picker>
+          </td>
+        </tr>
+        <tr>
+          <td class="edit-td-title">备注</td>
+          <td class="edit-td-content" colspan="3">
+            <textarea rows="3" nz-input [(ngModel)]="data['hand']['Remark']"></textarea>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="edit-footer">
+      <button nz-button (click)="cancel();" nzType="default">取 消</button>
+      <button nz-button [nzLoading]="isLoading" (click)="handleOk();" nzType="primary">提 交</button>
+    </div>
+  </div>
+  
