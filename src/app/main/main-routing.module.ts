@@ -47,6 +47,7 @@ import { StorageCheckComponent } from './storage-check/storage-check.component';
 import { ArticleComponent } from './article/article.component';
 import { ComplainComponent } from './complain/complain.component';
 import { RepairComponent } from './repair/repair.component';
+import { AddEditComponent as GoodsAddEditComponent } from './goods/add-edit/add-edit.component';
 
 const routes: Routes = [
   {
@@ -70,7 +71,7 @@ const routes: Routes = [
       { path: 'work-plan', component: WorkPlanComponent },
       //库存
       { path: 'goods-category', component: GoodsCategoryComponent, children: [{ path: 'add-edit', component: GoodsCategoryAddEditComponent }] },
-      { path: 'goods', component: GoodsComponent },
+      { path: 'goods', component: GoodsComponent, children: [{ path: 'add-edit', component: GoodsAddEditComponent }] },
       { path: 'storage', component: StorageComponent },
       { path: 'storage-in', component: StorageInComponent },
       { path: 'storage-out', component: StorageOutComponent },

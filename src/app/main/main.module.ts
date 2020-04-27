@@ -48,6 +48,7 @@ import { ArticleComponent } from './article/article.component';
 import { ComplainComponent } from './complain/complain.component';
 import { RepairComponent } from './repair/repair.component';
 import { AddEditComponent as GoodsCategoryAddEditComponent } from './goods-category/add-edit/add-edit.component';
+import { AddEditComponent as GoodsAddEditComponent } from './goods/add-edit/add-edit.component';
 
 @NgModule({
   declarations: [
@@ -97,7 +98,8 @@ import { AddEditComponent as GoodsCategoryAddEditComponent } from './goods-categ
     ArticleComponent,
     ComplainComponent,
     RepairComponent,
-    GoodsCategoryAddEditComponent
+    GoodsCategoryAddEditComponent,
+    GoodsAddEditComponent
   ],
   imports: [
     ShareModule,
