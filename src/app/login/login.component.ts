@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { LoginService } from '../service/login.service';
 import { Router } from '@angular/router';
+import { UploadChangeParam } from 'ng-zorro-antd';
 
 @Component({
   selector: 'app-login',
