@@ -1,11 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Injectable, Inject } from '@angular/core';
 import { HouseService } from 'src/app/service/house.service';
 import { AddEditComponent } from './add-edit/add-edit.component';
 import { AddEditComponent as OwnerAddEditComponent } from '../owner/add-edit/add-edit.component';
-import { NzModalService } from 'ng-zorro-antd';
+import { NzModalService, UploadChangeParam, NzMessageService } from 'ng-zorro-antd';
 import { OprationService } from 'src/app/service/opration.service';
 import { EstateService } from 'src/app/service/estate.service';
 import { AddBatchComponent } from './add-batch/add-batch.component';
+import { ServiceModule, API_CONFIG } from 'src/app/service/service.module';
+
+@Injectable({
+  providedIn: ServiceModule
+})
 
 @Component({
   selector: 'app-house',
@@ -24,8 +29,11 @@ export class HouseComponent implements OnInit {
     KeyWord: '',
     FkId: null
   };
+  uploadUrl: string = '/api/house/import';
+  headers: object = null;
+  importVisible = false;
 
-  search(){
+  search() {
     this.PageIndex = 1;
     this.getlist();
   }
@@ -165,9 +173,43 @@ export class HouseComponent implements OnInit {
     });
   }
 
-  constructor(private modalService: NzModalService, private estateService: EstateService, private houseService: HouseService, private oprationService: OprationService) { }
+  showImportModal() {
+    this.importVisible = true;
+  }
+
+  importClose() {
+    this.importVisible = false;
+  }
+
+  importChange(info: UploadChangeParam): void {
+    if (info.file.status !== 'uploading') {
+      console.log(info.file, info.fileList);
+    }
+    if (info.file.status === 'done') {
+      this.msg.success(`${info.file.name} 导入成功`);
+      //在这里下载导入得文件
+      if (info.file.response) {
+        let blob = new Blob([info.file.response]);
+        let objectUrl = URL.createObjectURL(blob);
+        let a = document.createElement('a');
+        document.body.appendChild(a);
+        a.setAttribute('style', 'display:none');
+        a.setAttribute('href', objectUrl);
+        a.click();
+        URL.revokeObjectURL(objectUrl);
+      }
+      //
+    } else if (info.file.status === 'error') {
+      this.msg.error(`${info.file.name} 导入失败.`);
+    }
+  }
+
+  constructor(private modalService: NzModalService, private msg: NzMessageService, private estateService: EstateService, private houseService: HouseService, private oprationService: OprationService, @Inject(API_CONFIG) private uri: string) { }
 
   ngOnInit() {
+    this.uploadUrl = this.uri + this.uploadUrl;
+    let ticket = window.sessionStorage['ticket'];
+    this.headers = { 'Authorization': 'BasicAuth ' + ticket };
     this.getlist();
     this.getEstate();
   }

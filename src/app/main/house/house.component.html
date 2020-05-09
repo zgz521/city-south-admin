@@ -1,7 +1,8 @@
 <div class="list-title">房产管理</div>
 <div class="list-search">
   <nz-select style="width:200px;" nzShowSearch nzAllowClear nzPlaceHolder="选择项目" [(ngModel)]="selectData['FkId']">
-    <nz-option *ngFor="let estateItem of estatelist" [nzLabel]="estateItem['EstateName']" [nzValue]="estateItem['EstateId']"></nz-option>
+    <nz-option *ngFor="let estateItem of estatelist" [nzLabel]="estateItem['EstateName']"
+      [nzValue]="estateItem['EstateId']"></nz-option>
   </nz-select>
   <div class="input-search">
     <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
@@ -13,6 +14,7 @@
   </div>
   <button nz-button nzType="primary" (click)="addEdit(-1)">新增房产</button>
   <button nz-button nzType="primary" (click)="addBatch()">批量新建房产</button>
+  <button nz-button nzType="primary" (click)="showImportModal()">导入房产</button>
 </div>
 <nz-table class="table-list" #headerTable [nzData]="datalist" [nzTotal]="TotalCount" [(nzPageIndex)]="PageIndex"
   [(nzPageSize)]="PageSize" [nzShowSizeChanger]="true" [nzPageSizeOptions]="[10, 15, 20]" [nzLoading]="isLoading"
@@ -37,7 +39,10 @@
     <tr *ngFor="let item of headerTable.data; let no = index;" (dblclick)="addEdit(no)">
       <td nzAlign="center">{{(PageIndex - 1) * PageSize + no + 1}}</td>
       <td nzAlign="center">{{item['house']['HouseNo']}}</td>
-      <td nzAlign="center"><div class="remark" style="width: 100px;" nz-tooltip [nzTooltipTitle]="item['EstateName']">{{item['EstateName']}}</div></td>
+      <td nzAlign="center">
+        <div class="remark" style="width: 100px;" nz-tooltip [nzTooltipTitle]="item['EstateName']">
+          {{item['EstateName']}}</div>
+      </td>
       <td nzAlign="center">{{item['house']['HouseType']}}</td>
       <td nzAlign="center">{{item['house']['Model']}}</td>
       <td nzAlign="center">{{item['house']['Structure']}}</td>
@@ -48,9 +53,13 @@
       </td>
       <td nzAlign="center">{{item['house']['ContactTel']}}</td>
       <td nzAlign="center">{{item['house']['HandDate'] | date:'yyyy-MM-dd'}}</td>
-      <td nzAlign="center"><div class="remark" style="width: 150px;" nz-tooltip [nzTooltipTitle]="item['house']['Remark']">{{item['house']['Remark']}}</div></td>
       <td nzAlign="center">
-        <a *ngIf="!item['house']['IsHasOwner']" (click)="addOwner(no)"><span nz-tooltip nzTooltipTitle="添加业主"><i nz-icon nzType="plus" nzTheme="outline"></i></span></a>
+        <div class="remark" style="width: 150px;" nz-tooltip [nzTooltipTitle]="item['house']['Remark']">
+          {{item['house']['Remark']}}</div>
+      </td>
+      <td nzAlign="center">
+        <a *ngIf="!item['house']['IsHasOwner']" (click)="addOwner(no)"><span nz-tooltip nzTooltipTitle="添加业主"><i nz-icon
+              nzType="plus" nzTheme="outline"></i></span></a>
         <nz-divider *ngIf="!item['house']['IsHasOwner']" nzType="vertical"></nz-divider>
         <a (click)="addEdit(no)"><i nz-icon nzType="edit" nzTheme="outline"></i></a>
         <nz-divider nzType="vertical"></nz-divider>
@@ -59,3 +68,11 @@
     </tr>
   </tbody>
 </nz-table>
+<nz-modal [(nzVisible)]="importVisible" (nzOnCancel)="importClose()" [nzMaskClosable]="false" nzWidth="300"
+  nzTitle="房产信息导入" [nzFooter]="null">
+  <div class="upload-content">
+    <nz-upload nzAction="{{uploadUrl}}" [nzHeaders]="headers" (nzChange)="importChange($event)">
+      <button nz-button><i nz-icon nzType="upload"></i>选择文件导入</button>
+    </nz-upload>
+  </div>
+</nz-modal>
