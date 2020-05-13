@@ -1,10 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject, Injectable } from '@angular/core';
 import { AddComponent } from './add/add.component';
 import { EditComponent } from './edit/edit.component';
-import { NzModalService } from 'ng-zorro-antd';
+import { NzModalService, NzMessageService, UploadChangeParam } from 'ng-zorro-antd';
 import { OprationService } from 'src/app/service/opration.service';
 import { EstateService } from 'src/app/service/estate.service';
 import { WaterElectricityService } from 'src/app/service/water-electricity.service';
+import { HttpClient } from '@angular/common/http';
+import { API_CONFIG, ServiceModule } from 'src/app/service/service.module';
+
+@Injectable({
+  providedIn: ServiceModule
+})
 
 @Component({
   selector: 'app-waterandelectricity',
@@ -23,6 +29,10 @@ export class WaterandelectricityComponent implements OnInit {
     type: null,
     FkId: null
   };
+  uploadUrl: string = '/api/waterandelectricity/import';
+  headers: object = null;
+  importVisible = false;
+  importList = [];
 
   search(){
     this.PageIndex = 1;
@@ -115,9 +125,48 @@ export class WaterandelectricityComponent implements OnInit {
     });
   }
 
-  constructor(private modalService: NzModalService, private estateService: EstateService, private waterElectricityService: WaterElectricityService, private oprationService: OprationService) { }
+  showImportModal() {
+    this.importVisible = true;
+  }
+
+  importClose() {
+    this.importVisible = false;
+  }
+
+  importChange(info: UploadChangeParam): void {
+    if (info.file.status === 'done') {
+      this.msg.success(`${info.file.name} 导入成功`);
+      //在这里下载导入得文件
+      this.getlist();
+      if (info.file.response) {
+        this.importList.push(info.file.response.filename);
+      }
+      //
+    } else if (info.file.status === 'error') {
+      this.msg.error(`${info.file.name} 导入失败.`);
+    }
+  }
+
+  download(filename: string){
+    this.http.get(this.uri + '/api/waterandelectricity/importfile?filename=' + filename, {responseType: 'blob', observe: 'response'}).subscribe(res => {
+      let blob = new Blob([res.body], { type: "application/octet-stream" });
+      let objectUrl = URL.createObjectURL(blob);
+      let a = document.createElement('a');
+      document.body.appendChild(a);
+      a.setAttribute('style', 'display:none');
+      a.setAttribute('href', objectUrl);
+      a.setAttribute('download', decodeURI(res.headers.get('content-disposition').split('filename=')[1]));
+      a.click();
+      URL.revokeObjectURL(objectUrl);
+    });
+  }
+
+  constructor(private modalService: NzModalService, private http: HttpClient, private msg: NzMessageService, @Inject(API_CONFIG) private uri: string, private estateService: EstateService, private waterElectricityService: WaterElectricityService, private oprationService: OprationService) { }
 
   ngOnInit() {
+    this.uploadUrl = this.uri + this.uploadUrl;
+    let ticket = window.sessionStorage['ticket'];
+    this.headers = { 'Authorization': 'BasicAuth ' + ticket };
     this.getlist();
     this.getEstate();
   }

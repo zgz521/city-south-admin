@@ -7,6 +7,7 @@ import { OprationService } from 'src/app/service/opration.service';
 import { EstateService } from 'src/app/service/estate.service';
 import { AddBatchComponent } from './add-batch/add-batch.component';
 import { ServiceModule, API_CONFIG } from 'src/app/service/service.module';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: ServiceModule
@@ -32,6 +33,7 @@ export class HouseComponent implements OnInit {
   uploadUrl: string = '/api/house/import';
   headers: object = null;
   importVisible = false;
+  importList = [];
 
   search() {
     this.PageIndex = 1;
@@ -188,15 +190,9 @@ export class HouseComponent implements OnInit {
     if (info.file.status === 'done') {
       this.msg.success(`${info.file.name} 导入成功`);
       //在这里下载导入得文件
+      this.getlist();
       if (info.file.response) {
-        let blob = new Blob([info.file.response]);
-        let objectUrl = URL.createObjectURL(blob);
-        let a = document.createElement('a');
-        document.body.appendChild(a);
-        a.setAttribute('style', 'display:none');
-        a.setAttribute('href', objectUrl);
-        a.click();
-        URL.revokeObjectURL(objectUrl);
+        this.importList.push(info.file.response.filename);
       }
       //
     } else if (info.file.status === 'error') {
@@ -204,7 +200,21 @@ export class HouseComponent implements OnInit {
     }
   }
 
-  constructor(private modalService: NzModalService, private msg: NzMessageService, private estateService: EstateService, private houseService: HouseService, private oprationService: OprationService, @Inject(API_CONFIG) private uri: string) { }
+  download(filename: string){
+    this.http.get(this.uri + '/api/house/importfile?filename=' + filename, {responseType: 'blob', observe: 'response'}).subscribe(res => {
+      let blob = new Blob([res.body], { type: "application/octet-stream" });
+      let objectUrl = URL.createObjectURL(blob);
+      let a = document.createElement('a');
+      document.body.appendChild(a);
+      a.setAttribute('style', 'display:none');
+      a.setAttribute('href', objectUrl);
+      a.setAttribute('download', decodeURI(res.headers.get('content-disposition').split('filename=')[1]));
+      a.click();
+      URL.revokeObjectURL(objectUrl);
+    });
+  }
+
+  constructor(private modalService: NzModalService, private http: HttpClient, private msg: NzMessageService, private estateService: EstateService, private houseService: HouseService, private oprationService: OprationService, @Inject(API_CONFIG) private uri: string) { }
 
   ngOnInit() {
     this.uploadUrl = this.uri + this.uploadUrl;

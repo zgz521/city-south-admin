@@ -74,5 +74,8 @@
     <nz-upload nzAction="{{uploadUrl}}" [nzHeaders]="headers" (nzChange)="importChange($event)">
       <button nz-button><i nz-icon nzType="upload"></i>选择文件导入</button>
     </nz-upload>
+    <div class="import-list">
+      <div class="import-item" *ngFor="let item of importList"><a (click)="download(item)">{{item}}</a></div>
+    </div>
   </div>
 </nz-modal>
