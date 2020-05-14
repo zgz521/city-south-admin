@@ -3,6 +3,7 @@ import { OprationService } from 'src/app/service/opration.service';
 import { OwnerService } from 'src/app/service/owner.service';
 import { CostConfigService } from 'src/app/service/cost-config.service';
 import { ParkingService } from 'src/app/service/parking.service';
+import { addDays, addMonths } from 'date-fns';
 
 @Component({
   selector: 'app-add',
@@ -105,7 +106,9 @@ export class AddComponent implements OnInit {
         discountMonth = Math.floor(this.data['MonthCount'] / this.curConfig['Quantity']);
         this.disCountText = `优惠${discountMonth}个月`;
       }
-      endtDate.setMonth(endtDate.getMonth() + this.data['MonthCount'] + discountMonth);
+      endtDate = addDays(endtDate, 1);
+      endtDate = addMonths(endtDate, this.data['MonthCount'] + discountMonth);
+      endtDate = addDays(endtDate, -1);
       endtDate.setDate(endtDate.getDate() - 1);
       this.data['EndDate'] = endtDate;
     }

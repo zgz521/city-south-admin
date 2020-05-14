@@ -22,7 +22,7 @@
       <th nzShowExpand nzWidth="50px"></th>
       <th nzAlign="center" nzWidth="50px">序号</th>
       <th nzAlign="center" nzWidth="100px">项目名称</th>
-      <th nzAlign="center" nzWidth="80px">房号</th>
+      <th nzAlign="center" nzWidth="100px">房号</th>
       <th nzAlign="center" nzWidth="100px">业主姓名</th>
       <th nzAlign="center" nzWidth="100px">常主人姓名</th>
       <th nzAlign="center" nzWidth="100px">户型</th>
@@ -37,10 +37,10 @@
       <tr (dblclick)="addEdit(index)">
         <td nzShowExpand [(nzExpand)]="mapOfExpandData[data['owner']['OwnerId']]"></td>
         <td nzAlign="center">{{(PageIndex - 1) * PageSize + index + 1}}</td>
-        <td nzAlign="center"><div class="remark" style="width: 100px;" nz-tooltip [nzTooltipTitle]="data['EstateName']">{{data['EstateName']}}</div></td>
+        <td nzAlign="center"><div class="remark" style="width: 84px;" nz-tooltip [nzTooltipTitle]="data['EstateName']">{{data['EstateName']}}</div></td>
         <td nzAlign="center">{{data['HouseNo']}}</td>
-        <td nzAlign="center">{{data['owner']['OwnerName']}}</td>
-        <td nzAlign="center"><div class="remark" style="width: 100px;" nz-tooltip [nzTooltipTitle]="data['owner']['CheckInName']">{{data['owner']['CheckInName']}}</div></td>
+        <td nzAlign="center"><div class="remark" style="width: 84px;" nz-tooltip [nzTooltipTitle]="data['owner']['OwnerName']">{{data['owner']['OwnerName']}}</div></td>
+        <td nzAlign="center"><div class="remark" style="width: 84px;" nz-tooltip [nzTooltipTitle]="data['owner']['CheckInName']">{{data['owner']['CheckInName']}}</div></td>
         <td nzAlign="center">{{data['Model']}}</td>
         <td nzAlign="center">{{data['Floorage']}}</td>
         <td nzAlign="center">{{data['owner']['Phone']}}</td>

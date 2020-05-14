@@ -18,12 +18,12 @@
 <nz-table class="table-list table-list-scroll-x" #headerTable [nzData]="datalist" [nzTotal]="TotalCount" [(nzPageIndex)]="PageIndex"
   [(nzPageSize)]="PageSize" [nzShowSizeChanger]="true" [nzPageSizeOptions]="[10, 15, 20]" [nzLoading]="isLoading"
   [nzBordered]="false" [nzNoResult]="'暂无数据'" [nzFrontPagination]="false" (nzPageIndexChange)="getlist()" (nzPageSizeChange)="getlist()"
-  [nzScroll]="{ x: '1580px' }">
+  [nzScroll]="{ x: '1600px' }">
   <thead>
     <tr>
       <th nzAlign="center" nzWidth="50px" nzLeft="0px">序号</th>
-      <th nzAlign="center" nzWidth="80px" nzLeft="50px">房号</th>
-      <th nzAlign="center" nzWidth="100px" nzLeft="130px">缴费人姓名</th>
+      <th nzAlign="center" nzWidth="100px" nzLeft="50px">房号</th>
+      <th nzAlign="center" nzWidth="100px" nzLeft="150px">缴费人姓名</th>
       <th nzAlign="center" nzWidth="100px">业主姓名</th>
       <th nzAlign="center" nzWidth="100px">项目名称</th>
       <th nzAlign="center" nzWidth="100px">房屋类型</th>
@@ -44,9 +44,9 @@
     <tr *ngFor="let item of headerTable.data; let no = index;" (dblclick)="edit(no)">
       <td nzAlign="center" nzLeft="0px">{{(PageIndex - 1) * PageSize + no + 1}}</td>
       <td nzAlign="center" nzLeft="50px">{{item['HouseNo']}}</td>
-      <td nzAlign="center" nzLeft="130px">{{item['CheckInName']}}</td>
-      <td nzAlign="center">{{item['OwnerName']}}</td>
-      <td nzAlign="center">{{item['EstateName']}}</td>
+      <td nzAlign="center" nzLeft="150px"><div class="remark" style="width: 84px;" nz-tooltip [nzTooltipTitle]="item['CheckInName']">{{item['CheckInName']}}</div></td>
+      <td nzAlign="center"><div class="remark" style="width: 84px;" nz-tooltip [nzTooltipTitle]="item['OwnerName']">{{item['OwnerName']}}</div></td>
+      <td nzAlign="center"><div class="remark" style="width: 84px;" nz-tooltip [nzTooltipTitle]="item['EstateName']">{{item['EstateName']}}</div></td>
       <td nzAlign="center">{{item['HouseType']}}</td>
       <td nzAlign="center">{{item['Floorage']}}</td>
       <td nzAlign="center">{{item['property']['UnitPrice']}}</td>
