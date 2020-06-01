@@ -1,0 +1,70 @@
+<div class="list-title">员工管理</div>
+<div class="list-search">
+  <nz-tree-select style="width: 200px;" [nzAllowClear]="true" [nzNodes]="category"
+    nzPlaceHolder="请选择岗位" [(ngModel)]="selectData['FkId']">
+  </nz-tree-select>
+  <nz-select style="width:200px;" nzShowSearch nzAllowClear nzPlaceHolder="选择项目" [(ngModel)]="selectData['Fk2Id']">
+    <nz-option *ngFor="let estateItem of estatelist" [nzLabel]="estateItem['EstateName']"
+      [nzValue]="estateItem['EstateId']"></nz-option>
+  </nz-select>
+  <nz-select style="width:200px;" nzShowSearch nzAllowClear nzPlaceHolder="假条类型" [(ngModel)]="selectData['type']">
+    <nz-option *ngFor="let item of typeNames" [nzLabel]="item" [nzValue]="item"></nz-option>
+  </nz-select>
+  <div class="input-search">
+    <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
+      <input type="text" [(ngModel)]="selectData['KeyWord']" nz-input placeholder="关键字" />
+    </nz-input-group>
+    <ng-template #suffixIconButton>
+      <button nz-button nzType="primary" nzSearch (click)="search()"><i nz-icon nzType="search"></i></button>
+    </ng-template>
+  </div>
+  <button nz-button nzType="primary" (click)="addEdit(-1)">新增假条</button>
+</div>
+<nz-table class="table-list" #headerTable [nzData]="datalist" [nzTotal]="TotalCount" [(nzPageIndex)]="PageIndex"
+  [(nzPageSize)]="PageSize" [nzShowSizeChanger]="true" [nzPageSizeOptions]="[10, 15, 20]" [nzLoading]="isLoading"
+  [nzBordered]="false" [nzFrontPagination]="false" (nzPageIndexChange)="getlist()" (nzPageSizeChange)="getlist()">
+  <thead>
+    <tr>
+      <th nzAlign="center" nzWidth="50px">序号</th>
+      <th nzAlign="left" nzWidth="140px">岗位</th>
+      <th nzAlign="center" nzWidth="100px">小区</th>
+      <th nzAlign="center" nzWidth="80px">姓名</th>
+      <th nzAlign="center" nzWidth="100px">电话</th>
+      <th nzAlign="center" nzWidth="100px">假条类型</th>
+      <th nzAlign="center" nzWidth="60px">天数</th>
+      <th nzAlign="center" nzWidth="100px">开始时间</th>
+      <th nzAlign="center" nzWidth="100px">结束时间</th>
+      <th nzAlign="left" nzWidth="150px">请假原因</th>
+      <th nzAlign="center">编辑</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let item of headerTable.data; let no = index;" [class.trdisabled]="item['leave']['IsDelete']"
+      (dblclick)="addEdit(no)">
+      <td nzAlign="center">{{(PageIndex - 1) * PageSize + no + 1}}</td>
+      <td nzAlign="left">
+        <div class="remark" style="width: 124px;" nz-tooltip [nzTooltipTitle]="postNames[item['PostId']]">
+          {{postNames[item['PostId']]}}</div>
+      </td>
+      <td nzAlign="center">
+        <div class="remark" style="width: 84px;" nz-tooltip [nzTooltipTitle]="estateNames[item['EstateId']]">
+          {{estateNames[item['EstateId']]}}</div>
+      </td>
+      <td nzAlign="center">{{item['EmployeeName']}}</td>
+      <td nzAlign="center">{{item['Phone']}}</td>
+      <td nzAlign="center">{{item['leave']['LeaveType']}}</td>
+      <td nzAlign="center">{{item['leave']['Days']}}</td>
+      <td nzAlign="center">{{item['leave']['StartDate']  | date:'yyyy-MM-dd'}}</td>
+      <td nzAlign="center">{{item['leave']['EndDate']  | date:'yyyy-MM-dd'}}</td>
+      <td nzAlign="left">
+        <div class="remark" style="width: 134px;" nz-tooltip [nzTooltipTitle]="item['leave']['Reason']">
+          {{item['leave']['Reason']}}</div>
+      </td>
+      <td nzAlign="center">
+        <a *ngIf="!item['leave']['IsDelete']" (click)="addEdit(no)"><i nz-icon nzType="edit" nzTheme="outline"></i></a>
+        <nz-divider *ngIf="!item['leave']['IsDelete']" nzType="vertical"></nz-divider>
+        <a *ngIf="!item['leave']['IsDelete']" (click)="delete(item['leave']['LeaveId'])"><i nz-icon nzType="delete" nzTheme="outline"></i></a>
+      </td>
+    </tr>
+  </tbody>
+</nz-table>

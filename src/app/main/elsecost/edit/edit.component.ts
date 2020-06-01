@@ -41,6 +41,10 @@ export class EditComponent implements OnInit {
     && this.checkValue(this.data['elseCost']['VoucherNo'], 'voucher');
     if (isVerfy && this.data['elseCost']['Status'] > -1) {
       this.isLoading = true;
+      if (this.data['elseCost']['CostName'].indexOf('押金') > -1)
+        this.data['elseCost']['IsDeposit'] = true;
+      else
+        this.data['elseCost']['IsDeposit'] = false;
       this.data['elseCost']['Status'] = this.data['IsPay'] ? 1 : 0;
       this.elseCostService.modify(this.data['elseCost']).subscribe(result => {
         this.isLoading = false;

@@ -54,7 +54,13 @@
         </td>
         <td class="edit-td-title">物业到期日期</td>
         <td class="edit-td-content">
-          <nz-date-picker [nzDisabled]="isKeyModify" [(ngModel)]="data['PropertyExpireDate']"></nz-date-picker>
+          <nz-date-picker [nzDisabled]="isKeyModify" [(ngModel)]="data['PropertyExpireDate']" (ngModelChange)="onEpireDateChange($event)"></nz-date-picker>
+        </td>
+      </tr>
+      <tr *ngIf="isExpireDateChange">
+        <td class="edit-td-title">物业到期变更备注</td>
+        <td class="edit-td-content" colspan="3">
+          <textarea rows="3" nz-input [(ngModel)]="data['ExpireModifyRemark']"></textarea>
         </td>
       </tr>
       <tr>
@@ -101,6 +107,8 @@
           <table class="edit-table-list">
             <tr>
               <th style="width: 30px;" class="td-button" (click)="setCar(-1);">+</th>
+              <th>姓名</th>
+              <th>电话</th>
               <th>品牌</th>
               <th>型号</th>
               <th>车牌</th>
@@ -108,6 +116,8 @@
             </tr>
             <tr *ngFor="let item of data['CarList']; let no = index;">
               <td class="td-button" (click)="setCar(no);">-</td>
+              <td><input placeholder="姓名" nz-input nzSize="small" [(ngModel)]="item['UserName']" /></td>
+              <td><input placeholder="电话" nz-input nzSize="small" [(ngModel)]="item['Phone']" /></td>
               <td><input placeholder="品牌" nz-input nzSize="small" [(ngModel)]="item['Brand']" /></td>
               <td><input placeholder="型号" nz-input nzSize="small" [(ngModel)]="item['Model']" /></td>
               <td><input placeholder="车牌" nz-input nzSize="small" [(ngModel)]="item['CarNumber']" /></td>
@@ -134,4 +144,28 @@
     <button nz-button (click)="cancel();" nzType="default">取 消</button>
     <button nz-button [nzLoading]="isLoading" [disabled]="isManage" (click)="handleOk();" nzType="primary">提 交</button>
   </div>
+  <div *ngIf="logList && logList.length > 0">
+    <div class="edit-title">物业到期变更历史</div>
+    <nz-table #historyTable [nzShowPagination]="false" [nzPageSize]="1000" [nzData]="logList">
+      <thead>
+        <tr>
+          <th nzWidth="100px">调整前到期</th>
+          <th nzWidth="100px">调整后到期</th>
+          <th nzWidth="140px">调整时间</th>
+          <th nzWidth="100px">操作人</th>
+          <th>备注</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of historyTable.data">
+          <td>{{item['ExpireDate'] | date:'yyyy-MM-dd'}}</td>
+          <td>{{item['ModifyDate'] | date:'yyyy-MM-dd'}}</td>
+          <td>{{item['CreateTime'] | date:'yyyy-MM-dd HH:mm'}}</td>
+          <td>{{item['UserName']}}</td>
+          <td>{{item['Remark']}}</td>
+        </tr>
+      </tbody>
+    </nz-table>
+  </div>
 </div>
+

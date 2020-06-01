@@ -154,6 +154,22 @@ export class OwnerComponent implements OnInit {
     });
   }
 
+  export() {
+    this.isLoading = true;
+    this.http.post(`${this.uri}/api/owner/export`, this.selectData, { responseType: 'blob', observe: 'response' }).subscribe(res => {
+      this.isLoading = false;
+      let blob = new Blob([res.body], { type: "application/octet-stream" });
+      let objectUrl = URL.createObjectURL(blob);
+      let a = document.createElement('a');
+      document.body.appendChild(a);
+      a.setAttribute('style', 'display:none');
+      a.setAttribute('href', objectUrl);
+      a.setAttribute('download', decodeURI(res.headers.get('content-disposition').split('filename=')[1]));
+      a.click();
+      URL.revokeObjectURL(objectUrl);
+    });
+  }
+
   constructor(private modalService: NzModalService, private http: HttpClient, private msg: NzMessageService, @Inject(API_CONFIG) private uri: string, private estateService: EstateService, private ownerService: OwnerService, private oprationService: OprationService) { }
 
   ngOnInit() {

@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { OprationService } from 'src/app/service/opration.service';
 import { OwnerService } from 'src/app/service/owner.service';
+import { differenceInDays, startOfDay } from 'date-fns';
 
 @Component({
   selector: 'app-add-edit',
@@ -19,6 +20,8 @@ export class AddEditComponent implements OnInit {
     phone: false,
     cardid: false
   }
+  expireDate: Date | null = null;
+  isExpireDateChange = false;
   isKeyModify = false;
   isManage = false;
   checkCardId(val: string) {
@@ -53,6 +56,7 @@ export class AddEditComponent implements OnInit {
       return false;
     }
   }
+  logList: any[] | null = null;
 
   checkValue($event: string, field: string) {
     let isVerfy = false;
@@ -86,7 +90,7 @@ export class AddEditComponent implements OnInit {
 
   setCar(no: number) {
     if (no < 0) {
-      this.data['CarList'].push({ Brand: null, Model: null, CarNumber: null, Remark: null });
+      this.data['CarList'].push({ Brand: null, UserName: this.data['OwnerName'], Phone: this.data['Phone'], Model: null, CarNumber: null, Remark: null });
     }
     else {
       if (this.data['CarList'][no]['CarId'] && this.data['CarList'][no]['CarId'] > 0) {
@@ -125,14 +129,34 @@ export class AddEditComponent implements OnInit {
     }
   }
 
+  onEpireDateChange(date: Date) {
+    if (this.expireDate && !date)
+      this.isExpireDateChange = true;
+    else if (!this.expireDate && date)
+      this.isExpireDateChange = true;
+    else if (differenceInDays(startOfDay(this.expireDate), startOfDay(date)) != 0)
+      this.isExpireDateChange = true;
+    else
+      this.isExpireDateChange = false;
+  }
+
+  getLogList() {
+    this.ownerService.selectLog(this.data['OwnerId']).subscribe(result => {
+      this.logList = result['datalist'];
+    })
+  }
+
   constructor(private ownerService: OwnerService, private oprationService: OprationService) { }
 
   ngOnInit(): void {
     let authors = window.sessionStorage['authors'].split(',');
     if (this.data['OwnerId'] && this.data['OwnerId'] > 0) {
+      this.getLogList();
       this.isKeyModify = authors.indexOf('owner.key-modify') === -1;
       this.isManage = authors.indexOf('owner.modify') === -1;
-    }else{
+      if (this.data['PropertyExpireDate'])
+        this.expireDate = new Date(this.data['PropertyExpireDate']);
+    } else {
       this.isManage = authors.indexOf('owner.add') === -1;
     }
     if (!this.data['OwnerId']) {

@@ -65,13 +65,13 @@ export class AddEditComponent implements OnInit {
 
   changeHouseNo() {
     let HouseNo = '';
-    if (this.data['Building'] && this.data['Building'] !== '')
+    if (this.data['Building'] != undefined && this.data['Building'] !== '')
       HouseNo += '-' + this.data['Building'];
-    if (this.data['Unit'] && this.data['Unit'] !== '')
+    if (this.data['Unit'] != undefined && this.data['Unit'] !== '')
       HouseNo += '-' + this.data['Unit'];
-    if (this.data['Floor'] && this.data['Floor'] !== '')
+    if (this.data['Floor'] != undefined && this.data['Floor'] !== '')
       HouseNo += '-' + this.data['Floor'];
-    if (this.data['No'] && this.data['No'] !== '')
+    if (this.data['No'] != undefined && this.data['No'] !== '')
       HouseNo += '-' + this.data['No'];
     if (HouseNo.length > 0)
       HouseNo = HouseNo.substring(1);

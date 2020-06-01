@@ -13,6 +13,7 @@
           <nz-select [disabled]="data['elseCost']['Status'] !== 0" style="width: 100%;;" nzPlaceHolder="费用类别" [(ngModel)]="data['elseCost']['CostName']">
             <nz-option nzLabel="电梯卡" nzValue="电梯卡"></nz-option>
             <nz-option nzLabel="卫生费" nzValue="卫生费"></nz-option>
+            <nz-option nzLabel="装修押金" nzValue="装修押金"></nz-option>
             <nz-option nzLabel="其它" nzValue="其它"></nz-option>
           </nz-select>
           <!-- <input [disabled]="data['elseCost']['Status'] !== 0" placeholder="费用类别" nz-input [(ngModel)]="data['elseCost']['CostName']" [nzAutocomplete]="auto" />

@@ -15,6 +15,11 @@ export class OwnerService {
     return this.http.post(url, selectData);
   }
 
+  selectLog(id: number){
+    let url = this.uri + '/api/owner/expirelog/' + id.toString();
+    return this.http.get(url);
+  }
+
   andCarSelect(estateId: number, key: string) {
     let selectData = {FkId: estateId, KeyWord: key};
     let url = this.uri + '/api/owner/andCarSelect';

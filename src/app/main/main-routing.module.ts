@@ -48,6 +48,10 @@ import { ArticleComponent } from './article/article.component';
 import { ComplainComponent } from './complain/complain.component';
 import { RepairComponent } from './repair/repair.component';
 import { AddEditComponent as GoodsAddEditComponent } from './goods/add-edit/add-edit.component';
+import { CarComponent } from './car/car.component';
+import { LeaveComponent } from './leave/leave.component';
+import { AddEditComponent as LeaveAddEditComponent } from './leave/add-edit/add-edit.component';
+import { AddEditComponent as ArticleAddEditComponent } from './article/add-edit/add-edit.component';
 
 const routes: Routes = [
   {
@@ -59,6 +63,7 @@ const routes: Routes = [
       { path: 'estate', component: EstateComponent, children: [] },
       { path: 'house', component: HouseComponent, children: [{ path: 'add-edit', component: HouseAddEditComponent }, { path: 'add-batch', component: HouseAddBatchComponent }] },
       { path: 'owner', component: OwnerComponent, children: [{ path: 'add-edit', component: OwnerAddEditComponent }] },
+      { path: 'car', component: CarComponent },
       { path: 'hand-house', component: HandHouseComponent, children: [{ path: 'add', component: HandHouseAddComponent }, { path: 'edit', component: HandHouseEditComponent }] },
       //缴费
       { path: 'property', component: PropertyComponent, children: [{ path: 'add', component: PropertyAddComponent }, { path: 'edit', component: PropertyEditComponent }] },
@@ -69,6 +74,7 @@ const routes: Routes = [
       { path: 'post', component: PostComponent, children: [{ path: 'add-edit', component: PostAddEditComponent }] },
       { path: 'employee', component: EmployeeComponent, children: [{ path: 'add-edit', component: EmployeeAddEditComponent }] },
       { path: 'work-plan', component: WorkPlanComponent },
+      { path: 'leave', component: LeaveComponent, children: [{ path: 'add-edit', component: LeaveAddEditComponent }] },
       //库存
       { path: 'goods-category', component: GoodsCategoryComponent, children: [{ path: 'add-edit', component: GoodsCategoryAddEditComponent }] },
       { path: 'goods', component: GoodsComponent, children: [{ path: 'add-edit', component: GoodsAddEditComponent }] },
@@ -77,7 +83,7 @@ const routes: Routes = [
       { path: 'storage-out', component: StorageOutComponent },
       { path: 'storage-check', component: StorageCheckComponent },
       //业主
-      { path: 'article', component: ArticleComponent },
+      { path: 'article', component: ArticleComponent , children: [{ path: 'add-edit', component: ArticleAddEditComponent }]},
       { path: 'complain', component: ComplainComponent },
       { path: 'repair', component: RepairComponent },
       //设置

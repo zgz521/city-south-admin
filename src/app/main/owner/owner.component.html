@@ -4,12 +4,16 @@
     <nz-option *ngFor="let estateItem of estatelist" [nzLabel]="estateItem['EstateName']"
       [nzValue]="estateItem['EstateId']"></nz-option>
   </nz-select>
+  <nz-date-picker nzPlaceHolder="物业到期截止时间" [(ngModel)]="selectData['SearchDate']"></nz-date-picker>
   <div class="input-search">
     <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
       <input type="text" [(ngModel)]="selectData['KeyWord']" nz-input placeholder="关键字" />
     </nz-input-group>
     <ng-template #suffixIconButton>
-      <button nz-button nzType="primary" nzSearch (click)="search()"><i nz-icon nzType="search"></i></button>
+      <nz-button-group nzSearch>
+        <button class="export-search" nz-button nzType="primary" (click)="search()"><i nz-icon nzType="search"></i></button>
+        <button nz-button nzType="primary" (click)="export()"><i nz-icon nzType="export"></i></button>
+      </nz-button-group>
     </ng-template>
   </div>
   <button nz-button nzType="primary" (click)="showImportModal()">导入业主</button>
@@ -25,6 +29,7 @@
       <th nzAlign="center" nzWidth="100px">房号</th>
       <th nzAlign="center" nzWidth="100px">业主姓名</th>
       <th nzAlign="center" nzWidth="100px">常主人姓名</th>
+      <th nzAlign="center" nzWidth="90px">常主人口数</th>
       <th nzAlign="center" nzWidth="100px">户型</th>
       <th nzAlign="center" nzWidth="80px">建筑面积</th>
       <th nzAlign="center" nzWidth="100px">联系电话</th>
@@ -37,10 +42,20 @@
       <tr (dblclick)="addEdit(index)">
         <td nzShowExpand [(nzExpand)]="mapOfExpandData[data['owner']['OwnerId']]"></td>
         <td nzAlign="center">{{(PageIndex - 1) * PageSize + index + 1}}</td>
-        <td nzAlign="center"><div class="remark" style="width: 84px;" nz-tooltip [nzTooltipTitle]="data['EstateName']">{{data['EstateName']}}</div></td>
+        <td nzAlign="center">
+          <div class="remark" style="width: 84px;" nz-tooltip [nzTooltipTitle]="data['EstateName']">
+            {{data['EstateName']}}</div>
+        </td>
         <td nzAlign="center">{{data['HouseNo']}}</td>
-        <td nzAlign="center"><div class="remark" style="width: 84px;" nz-tooltip [nzTooltipTitle]="data['owner']['OwnerName']">{{data['owner']['OwnerName']}}</div></td>
-        <td nzAlign="center"><div class="remark" style="width: 84px;" nz-tooltip [nzTooltipTitle]="data['owner']['CheckInName']">{{data['owner']['CheckInName']}}</div></td>
+        <td nzAlign="center">
+          <div class="remark" style="width: 84px;" nz-tooltip [nzTooltipTitle]="data['owner']['OwnerName']">
+            {{data['owner']['OwnerName']}}</div>
+        </td>
+        <td nzAlign="center">
+          <div class="remark" style="width: 84px;" nz-tooltip [nzTooltipTitle]="data['owner']['CheckInName']">
+            {{data['owner']['CheckInName']}}</div>
+        </td>
+        <td nzAlign="center">{{data['owner']['FamilyList'].length}}</td>
         <td nzAlign="center">{{data['Model']}}</td>
         <td nzAlign="center">{{data['Floorage']}}</td>
         <td nzAlign="center">{{data['owner']['Phone']}}</td>
@@ -74,7 +89,8 @@
                   <h6>车牌：</h6><span>{{car['CarNumber']}}</span>
                   <h6>品牌：</h6><span>{{car['Brand']}}</span>
                   <h6>型号：</h6><span>{{car['Model']}}</span>
-                  <h6>停车费到期：</h6><span *ngIf="!car['ParkingExpireDate']">从未缴纳</span><span *ngIf="car['ParkingExpireDate']">{{car['ParkingExpireDate'] | date:'yyyy-MM-dd'}}</span>
+                  <h6>停车费到期：</h6><span *ngIf="!car['ParkingExpireDate']">从未缴纳</span><span
+                    *ngIf="car['ParkingExpireDate']">{{car['ParkingExpireDate'] | date:'yyyy-MM-dd'}}</span>
                   <h6>备注：</h6><span>{{car['Remark']}}</span>
                 </div>
               </td>

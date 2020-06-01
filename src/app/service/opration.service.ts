@@ -1,12 +1,15 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Inject } from '@angular/core';
 import { NzModalService } from 'ng-zorro-antd';
+import { ServiceModule, API_CONFIG } from './service.module';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: ServiceModule
 })
+
 export class OprationService {
 
-  constructor(private modalService: NzModalService) { }
+  constructor(private modalService: NzModalService, private http: HttpClient, @Inject(API_CONFIG) private uri: string) { }
 
   tips(result: any, message?: string) {
     if (result['code'] == 'success') {
@@ -95,6 +98,21 @@ export class OprationService {
     }
     errors[field] = !isVerfy;
     return isVerfy;
+  }
+
+  download(path: string, data: any, cb: any) {
+    this.http.post(`${this.uri}${path}`, data, { responseType: 'blob', observe: 'response' }).subscribe(res => {
+      cb();
+      let blob = new Blob([res.body], { type: "application/octet-stream" });
+      let objectUrl = URL.createObjectURL(blob);
+      let a = document.createElement('a');
+      document.body.appendChild(a);
+      a.setAttribute('style', 'display:none');
+      a.setAttribute('href', objectUrl);
+      a.setAttribute('download', decodeURI(res.headers.get('content-disposition').split('filename=')[1]));
+      a.click();
+      URL.revokeObjectURL(objectUrl);
+    });
   }
 
 }

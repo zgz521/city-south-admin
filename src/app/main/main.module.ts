@@ -49,6 +49,11 @@ import { ComplainComponent } from './complain/complain.component';
 import { RepairComponent } from './repair/repair.component';
 import { AddEditComponent as GoodsCategoryAddEditComponent } from './goods-category/add-edit/add-edit.component';
 import { AddEditComponent as GoodsAddEditComponent } from './goods/add-edit/add-edit.component';
+import { CarComponent } from './car/car.component';
+import { LeaveComponent } from './leave/leave.component';
+import { AddEditComponent as LeaveAddEditComponent } from './leave/add-edit/add-edit.component';
+import { AddEditComponent as ArticleAddEditComponent } from './article/add-edit/add-edit.component';
+import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 
 @NgModule({
   declarations: [
@@ -99,11 +104,16 @@ import { AddEditComponent as GoodsAddEditComponent } from './goods/add-edit/add-
     ComplainComponent,
     RepairComponent,
     GoodsCategoryAddEditComponent,
-    GoodsAddEditComponent
+    GoodsAddEditComponent,
+    CarComponent,
+    LeaveComponent,
+    LeaveAddEditComponent,
+    ArticleAddEditComponent
   ],
   imports: [
     ShareModule,
-    MainRoutingModule
+    MainRoutingModule,
+    CKEditorModule
   ],
   exports: [
     MainRoutingModule

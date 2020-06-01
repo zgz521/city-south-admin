@@ -1,0 +1,44 @@
+<div [style.max-height]="divHeight" style="overflow-y: auto; overflow-x: hidden; width: 100%;">
+  <form nz-form nzLayout="horizontal" [formGroup]="validateForm" (ngSubmit)="handleOk()">
+    <nz-form-item>
+      <nz-form-label [nzSpan]="2">标题</nz-form-label>
+      <nz-form-control [nzSpan]="22" nzErrorTip="请输入标题">
+        <input nz-input formControlName="Title" placeholder="请输入标题" />
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSpan]="2">跳转URL</nz-form-label>
+      <nz-form-control [nzSpan]="22">
+        <input nz-input formControlName="GoUrl" placeholder="如需跳转请输入跳转URL地址" />
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSpan]="2">项目</nz-form-label>
+      <nz-form-control [nzSpan]="22">
+        <nz-select [nzMaxTagCount]="3" [nzMaxTagPlaceholder]="tagPlaceHolder" nzMode="multiple" nzPlaceHolder="请选择"
+          formControlName="EstateIds">
+          <nz-option *ngFor="let estate of estatelist" [nzLabel]="estate.EstateName" [nzValue]="estate.EstateId">
+          </nz-option>
+        </nz-select>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSpan]="2">显示</nz-form-label>
+      <nz-form-control [nzSpan]="22">
+        <nz-switch formControlName="IsShow"></nz-switch>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSpan]="2">内容</nz-form-label>
+      <nz-form-control [nzSpan]="editSpan">
+        <ckeditor [editor]="Editor" formControlName="Content"></ckeditor>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-control [nzSpan]="null" style="text-align: right;">
+        <button nz-button nzType="default" (click)="close()">关闭</button>
+        <button style="margin-left: 10px;" nz-button nzType="primary">保存</button>
+      </nz-form-control>
+    </nz-form-item>
+  </form>
+</div>

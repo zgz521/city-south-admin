@@ -1,1 +1,47 @@
-<p>article works!</p>
+<div class="list-title">公告管理</div>
+<div class="list-search">
+  <div class="input-search">
+    <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
+      <input type="text" [(ngModel)]="selectData['KeyWord']" nz-input placeholder="关键字" />
+    </nz-input-group>
+    <ng-template #suffixIconButton>
+      <button nz-button nzSearch nzType="primary" (click)="search()"><i nz-icon nzType="search"></i></button>
+    </ng-template>
+  </div>
+  <button nz-button nzType="primary" (click)="addEdit(-1)">添加公告</button>
+</div>
+<nz-table class="table-list" #headerTable [nzData]="datalist" [nzTotal]="TotalCount" [(nzPageIndex)]="PageIndex"
+  [(nzPageSize)]="PageSize" [nzShowSizeChanger]="true" [nzPageSizeOptions]="[10, 15, 20]" [nzLoading]="isLoading"
+  [nzBordered]="false" [nzFrontPagination]="false" (nzPageIndexChange)="getlist()" (nzPageSizeChange)="getlist()">
+  <thead>
+    <tr>
+      <th nzAlign="center" nzWidth="50px">序号</th>
+      <th nzAlign="center" nzWidth="100px">分类</th>
+      <th nzAlign="center" nzWidth="200px">标题</th>
+      <th nzAlign="center" nzWidth="100px">跳转</th>
+      <th nzAlign="center" nzWidth="80px">点击</th>
+      <th nzAlign="center" nzWidth="80px">显示</th>
+      <th nzAlign="center" nzWidth="120px">时间</th>
+      <th nzAlign="center">处理</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let item of headerTable.data; let no = index;" (dblclick)="addEdit(no)">
+      <td nzAlign="center">{{(PageIndex - 1) * PageSize + no + 1}}</td>
+      <td nzAlign="center">{{item['CategoryName']}}</td>
+      <td nzAlign="left">
+        <div class="remark" style="width: 184px;" nz-tooltip [nzTooltipTitle]="item['Title']">
+          {{item['Title']}}</div>
+      </td>
+      <td nzAlign="center">{{item['GoUrl']}}</td>
+      <td nzAlign="center">{{item['Click']}}</td>
+      <td nzAlign="center">{{item['IsShow']}}</td>
+      <td nzAlign="center">{{item['AddTime'] | date:'yyyy-MM-dd'}}</td>
+      <td nzAlign="center">
+        <a (click)="addEdit(no)"><i nz-icon nzType="edit" nzTheme="outline"></i></a>
+        <nz-divider nzType="vertical"></nz-divider>
+        <a (click)="delete(item['ArticleId'])"><i nz-icon nzType="delete" nzTheme="outline"></i></a>
+      </td>
+    </tr>
+  </tbody>
+</nz-table>

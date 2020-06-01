@@ -11,26 +11,26 @@
         </td>
         <td class="edit-td-title">所处栋数</td>
         <td class="edit-td-content">
-          <nz-input-number [(ngModel)]="data['Building']" (ngModelChange)="changeHouseNo()" [nzMin]="1" [nzMax]="100"
+          <nz-input-number [(ngModel)]="data['Building']" (ngModelChange)="changeHouseNo()" [nzMin]="0" [nzMax]="100"
             [nzStep]="1"></nz-input-number>
         </td>
       </tr>
       <tr>
         <td class="edit-td-title">所在单元</td>
         <td class="edit-td-content">
-          <nz-input-number [(ngModel)]="data['Unit']" (ngModelChange)="changeHouseNo()" [nzMin]="1" [nzMax]="100"
+          <nz-input-number [(ngModel)]="data['Unit']" (ngModelChange)="changeHouseNo()" [nzMin]="0" [nzMax]="100"
             [nzStep]="1"></nz-input-number>
         </td>
         <td class="edit-td-title">所在楼层</td>
         <td class="edit-td-content">
-          <nz-input-number [(ngModel)]="data['Floor']" (ngModelChange)="changeHouseNo()" [nzMin]="1" [nzMax]="100"
+          <nz-input-number [(ngModel)]="data['Floor']" (ngModelChange)="changeHouseNo()" [nzMin]="-5" [nzMax]="100"
             [nzStep]="1"></nz-input-number>
         </td>
       </tr>
       <tr>
         <td class="edit-td-title">所处房号</td>
         <td class="edit-td-content">
-          <nz-input-number [(ngModel)]="data['No']" (ngModelChange)="changeHouseNo()" [nzMin]="1" [nzMax]="100"
+          <nz-input-number [(ngModel)]="data['No']" (ngModelChange)="changeHouseNo()" [nzMin]="0" [nzMax]="100"
             [nzStep]="1"></nz-input-number>
         </td>
         <td class="edit-td-title">房屋房号</td>

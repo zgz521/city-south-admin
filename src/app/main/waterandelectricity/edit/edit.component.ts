@@ -113,6 +113,8 @@ export class EditComponent implements OnInit {
 
   ngOnInit(): void {
     this.data['IsPay'] = this.data['waterAndE']['Status'] == 1;
+    if (!this.data['waterAndE']['ShareQuantity'])
+      this.data['waterAndE']['ShareQuantity'] = 0;
     this.getConfig();
   }
 

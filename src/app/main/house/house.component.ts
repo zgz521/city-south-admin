@@ -200,8 +200,25 @@ export class HouseComponent implements OnInit {
     }
   }
 
-  download(filename: string){
-    this.http.get(this.uri + '/api/house/importfile?filename=' + filename, {responseType: 'blob', observe: 'response'}).subscribe(res => {
+  download(filename: string) {
+    this.http.get(this.uri + '/api/house/importfile?filename=' + filename, { responseType: 'blob', observe: 'response' }).subscribe(res => {
+      let blob = new Blob([res.body], { type: "application/octet-stream" });
+      let objectUrl = URL.createObjectURL(blob);
+      let a = document.createElement('a');
+      document.body.appendChild(a);
+      a.setAttribute('style', 'display:none');
+      a.setAttribute('href', objectUrl);
+      a.setAttribute('download', decodeURI(res.headers.get('content-disposition').split('filename=')[1]));
+      a.click();
+      URL.revokeObjectURL(objectUrl);
+    });
+  }
+
+  export() {
+    this.isLoading = true;
+    //
+    this.http.post(`${this.uri}/api/house/export`, this.selectData, { responseType: 'blob', observe: 'response' }).subscribe(res => {
+      this.isLoading = false;
       let blob = new Blob([res.body], { type: "application/octet-stream" });
       let objectUrl = URL.createObjectURL(blob);
       let a = document.createElement('a');

@@ -1,4 +1,5 @@
 button { margin-bottom: 16px; }
-.editable-cell { position: relative;}
-.editable-cell-value-wrap {padding: 5px 12px; cursor: pointer;}
-.editable-row:hover .editable-cell-value-wrap { border: 1px solid #d9d9d9; border-radius: 4px; padding: 4px 11px;}
+:host ::ng-deep .editable-cell { position: relative;}
+:host ::ng-deep .editable-row:hover .editable-cell-value-wrap { border: 1px solid #d9d9d9; border-radius: 2px; padding: 2px!important; min-height: 25px; cursor: pointer;}
+:host ::ng-deep .ant-table-thead > tr > th, .ant-table-tbody > tr > td{padding: 4px!important; }
+:host ::ng-deep .ant-input{padding: 2px!important; height: auto;}

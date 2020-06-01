@@ -2,11 +2,20 @@
 <nz-table #editRowTable nzBordered [nzShowPagination]="false" [nzData]="datalist">
   <thead>
     <tr>
-      <th nzWidth="50px">序号</th>
+      <th nzWidth="35px">NO</th>
       <th nzWidth="120px">小区名称</th>
-      <th nzWidth="300px">小区地址</th>
-      <th>小区介绍</th>
-      <th nzWidth="120px">操作</th>
+      <th nzWidth="150px">小区地址</th>
+      <th nzWidth="80px">总建筑面积</th>
+      <th nzWidth="80px">住宅面积</th>
+      <th nzWidth="70px">住宅套数</th>
+      <th nzWidth="80px">产业房面积</th>
+      <th nzWidth="80px">地下室面积</th>
+      <th nzWidth="70px">车位数量</th>
+      <th nzWidth="100px">配套用房面积</th>
+      <th nzWidth="80px">绿化面积</th>
+      <th nzWidth="70px">经度</th>
+      <th nzWidth="70px">纬度</th>
+      <th>操作</th>
     </tr>
   </thead>
   <tbody>
@@ -33,13 +42,103 @@
         </ng-template>
       </td>
       <td>
-        <div class="editable-cell" *ngIf="editIndex !== no || colIndex !== 3; else editIntroduct">
+        <div class="editable-cell" *ngIf="editIndex !== no || colIndex !== 3; else editBuildingArea">
           <div class="editable-cell-value-wrap" (click)="startEdit(no, 3, $event)">
-            {{ data['Introduct'] }}
+            {{ data['BuildingArea'] }}
           </div>
         </div>
-        <ng-template #editIntroduct>
-          <input type="text" nz-input [(ngModel)]="data['Introduct']" />
+        <ng-template #editBuildingArea>
+          <input type="text" nz-input [(ngModel)]="data['BuildingArea']" />
+        </ng-template>
+      </td>
+      <td>
+        <div class="editable-cell" *ngIf="editIndex !== no || colIndex !== 4; else editResidentialArea">
+          <div class="editable-cell-value-wrap" (click)="startEdit(no, 4, $event)">
+            {{ data['ResidentialArea'] }}
+          </div>
+        </div>
+        <ng-template #editResidentialArea>
+          <input type="text" nz-input [(ngModel)]="data['ResidentialArea']" />
+        </ng-template>
+      </td>
+      <td>
+        <div class="editable-cell" *ngIf="editIndex !== no || colIndex !== 5; else editResidentialCount">
+          <div class="editable-cell-value-wrap" (click)="startEdit(no, 5, $event)">
+            {{ data['ResidentialCount'] }}
+          </div>
+        </div>
+        <ng-template #editResidentialCount>
+          <input type="text" nz-input [(ngModel)]="data['ResidentialCount']" />
+        </ng-template>
+      </td>
+      <td>
+        <div class="editable-cell" *ngIf="editIndex !== no || colIndex !== 6; else editHouseArea">
+          <div class="editable-cell-value-wrap" (click)="startEdit(no, 6, $event)">
+            {{ data['HouseArea'] }}
+          </div>
+        </div>
+        <ng-template #editHouseArea>
+          <input type="text" nz-input [(ngModel)]="data['HouseArea']" />
+        </ng-template>
+      </td>
+      <td>
+        <div class="editable-cell" *ngIf="editIndex !== no || colIndex !== 7; else editBasementArea">
+          <div class="editable-cell-value-wrap" (click)="startEdit(no, 7, $event)">
+            {{ data['BasementArea'] }}
+          </div>
+        </div>
+        <ng-template #editBasementArea>
+          <input type="text" nz-input [(ngModel)]="data['BasementArea']" />
+        </ng-template>
+      </td>
+      <td>
+        <div class="editable-cell" *ngIf="editIndex !== no || colIndex !== 8; else editCarplaceCount">
+          <div class="editable-cell-value-wrap" (click)="startEdit(no, 8, $event)">
+            {{ data['CarplaceCount'] }}
+          </div>
+        </div>
+        <ng-template #editCarplaceCount>
+          <input type="text" nz-input [(ngModel)]="data['CarplaceCount']" />
+        </ng-template>
+      </td>
+      <td>
+        <div class="editable-cell" *ngIf="editIndex !== no || colIndex !== 9; else editMatchingArea">
+          <div class="editable-cell-value-wrap" (click)="startEdit(no, 9, $event)">
+            {{ data['MatchingArea'] }}
+          </div>
+        </div>
+        <ng-template #editMatchingArea>
+          <input type="text" nz-input [(ngModel)]="data['MatchingArea']" />
+        </ng-template>
+      </td>
+      <td>
+        <div class="editable-cell" *ngIf="editIndex !== no || colIndex !== 10; else editGreenArea">
+          <div class="editable-cell-value-wrap" (click)="startEdit(no, 10, $event)">
+            {{ data['GreenArea'] }}
+          </div>
+        </div>
+        <ng-template #editGreenArea>
+          <input type="text" nz-input [(ngModel)]="data['GreenArea']" />
+        </ng-template>
+      </td>
+      <td>
+        <div class="editable-cell" *ngIf="editIndex !== no || colIndex !== 11; else editLongitude">
+          <div class="editable-cell-value-wrap" (click)="startEdit(no, 11, $event)">
+            {{ data['Longitude'] }}
+          </div>
+        </div>
+        <ng-template #editLongitude>
+          <input type="text" nz-input [(ngModel)]="data['Longitude']" />
+        </ng-template>
+      </td>
+      <td>
+        <div class="editable-cell" *ngIf="editIndex !== no || colIndex !== 12; else editLatitude">
+          <div class="editable-cell-value-wrap" (click)="startEdit(no, 12, $event)">
+            {{ data['Latitude'] }}
+          </div>
+        </div>
+        <ng-template #editLatitude>
+          <input type="text" nz-input [(ngModel)]="data['Latitude']" />
         </ng-template>
       </td>
       <td>

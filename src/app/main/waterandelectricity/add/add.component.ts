@@ -91,8 +91,10 @@ export class AddComponent implements OnInit {
   }
 
   calculateAmount() {
+    if (!this.data['ShareQuantity'])
+      this.data['ShareQuantity'] = 0;
     if (this.data['UnitPrice'] && this.data['LastQuantity'] != null && this.data['Quantity']) {
-      this.data['Amount'] = (this.data['UnitPrice'] * (this.data['Quantity'] - this.data['LastQuantity'])).toFixed(2);
+      this.data['Amount'] = (this.data['UnitPrice'] * (this.data['Quantity'] + this.data['ShareQuantity'] - this.data['LastQuantity'])).toFixed(2);
     }
   }
 
@@ -165,6 +167,7 @@ export class AddComponent implements OnInit {
 
   ngOnInit(): void {
     this.data['EstateId'] = this.estateList[0]['EstateId'];
+    this.data['CreateTime'] = new Date();
     this.getConfig();
   }
 

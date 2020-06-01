@@ -19,6 +19,8 @@
     "@angular/platform-browser": "~8.2.14",
     "@angular/platform-browser-dynamic": "~8.2.14",
     "@angular/router": "~8.2.14",
+    "@ckeditor/ckeditor5-angular": "^1.2.3",
+    "@ckeditor/ckeditor5-build-classic": "^19.0.1",
     "angular2-baidu-map": "^8.0.0",
     "date-fns": "^2.13.0",
     "echarts": "^4.6.0",

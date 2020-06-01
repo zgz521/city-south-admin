@@ -74,9 +74,22 @@
           <input style="width: 100%;" nz-input placeholder="本月用量"
             [ngModel]="(data['Quantity'] - data['LastQuantity']).toFixed(2)" [disabled]="true" />
         </td>
+        <td class="edit-td-title">分摊表量</td>
+        <td class="edit-td-content">
+          <nz-input-number style="width: 100%;" nzPlaceHolder="分摊表量" [nzMin]="0" [nzMax]="99999.99" [nzStep]="0.01"
+            [(ngModel)]="data['ShareQuantity']" (ngModelChange)="calculateAmount()">
+          </nz-input-number>
+        </td>
+      </tr>
+      <tr>
         <td class="edit-td-title">应缴金额</td>
         <td class="edit-td-content">
           <input nz-input placeholder="应缴金额" [(ngModel)]="data['Amount']" [disabled]="true" />
+        </td>
+        <td class="edit-td-title">缴费时间</td>
+        <td class="edit-td-content">
+          <input style="width: 100%;" nz-input placeholder="缴费时间"
+            [ngModel]="data['CreateTime'] | date:'yyyy-MM-dd HH:mm'" [disabled]="true" />
         </td>
       </tr>
       <tr>

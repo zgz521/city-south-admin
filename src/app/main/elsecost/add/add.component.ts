@@ -2,7 +2,6 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { OprationService } from 'src/app/service/opration.service';
 import { OwnerService } from 'src/app/service/owner.service';
 import { CostConfigService } from 'src/app/service/cost-config.service';
-import { WaterElectricityService } from 'src/app/service/water-electricity.service';
 import { ElseCostService } from 'src/app/service/else-cost.service';
 
 @Component({
@@ -71,6 +70,10 @@ export class AddComponent implements OnInit {
     let isVerfy = this.checkValue(this.data['ReceiptNo'], 'receipt') && this.checkValue(this.data['VoucherNo'], 'voucher');
     if (isVerfy) {
       this.isLoading = true;
+      if (this.data['CostName'].indexOf('押金') > -1)
+        this.data['IsDeposit'] = true;
+      else
+        this.data['IsDeposit'] = false;
       this.data['Status'] = this.data['IsPay'] ? 1 : 0;
       this.wlseCostService.add(this.data).subscribe(result => {
         this.isLoading = false;

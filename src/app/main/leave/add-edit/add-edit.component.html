@@ -1,0 +1,75 @@
+<div [style.max-height]="divHeight" style="overflow-y: auto;">
+  <table class="edit-table">
+    <tbody>
+      <tr>
+        <td class="edit-td-title">员工选择</td>
+        <td class="edit-td-content">
+          <nz-select style="width:100%;" nzShowSearch nzAllowClear [(ngModel)]="data['EmployeeId']" nzPlaceHolder="选择员工"
+            [nzServerSearch]="true" (nzOnSearch)="onSearch($event)" (ngModelChange)="onEmployeeChange()">
+            <nz-option *ngFor="let em of employeeList" [nzValue]="em['EmployeeId']"
+              [nzLabel]="em['EmployeeName'] + '(' + em['EmployeeNo'] + ')'">
+            </nz-option>
+            <nz-option *ngIf="displayTips" nzDisabled nzCustomContent>
+              至少输入2个字符搜索
+            </nz-option>
+          </nz-select>
+        </td>
+        <td class="edit-td-title">请假类型</td>
+        <td class="edit-td-content">
+          <nz-select style="width:100%;" nzPlaceHolder="请假类型" [(ngModel)]="data['LeaveType']">
+            <nz-option nzLabel="事假" nzValue="事假"></nz-option>
+            <nz-option nzLabel="病假" nzValue="病假"></nz-option>
+            <nz-option nzLabel="婚假" nzValue="婚假"></nz-option>
+            <nz-option nzLabel="产假" nzValue="产假"></nz-option>
+            <nz-option nzLabel="陪护假" nzValue="陪护假"></nz-option>
+            <nz-option nzLabel="年休假" nzValue="年休假"></nz-option>
+            <nz-option nzLabel="其它" nzValue="其它"></nz-option>
+          </nz-select>
+        </td>
+      </tr>
+      <tr>
+        <td class="edit-td-title">所属项目</td>
+        <td class="edit-td-content"><input nz-input placeholder="所属项目" [ngModel]="EsateName" [disabled]="true" /></td>
+        <td class="edit-td-title">所属岗位</td>
+        <td class="edit-td-content"><input nz-input placeholder="所属岗位" [ngModel]="PostName" [disabled]="true" /></td>
+      </tr>
+      <tr>
+        <td class="edit-td-title">登记时间</td>
+        <td class="edit-td-content">
+          <nz-date-picker nzDisabled [(ngModel)]="data['CreateTime']"></nz-date-picker>
+        </td>
+        <td class="edit-td-title">请假天数</td>
+        <td class="edit-td-content">
+          <nz-input-number [(ngModel)]="data['Days']" [nzMin]="0.5" [nzMax]="200" [nzStep]="0.5"
+            (ngModelChange)="onTimeChange()"></nz-input-number>
+        </td>
+      </tr>
+      <tr>
+        <td class="edit-td-title">起始日期</td>
+        <td class="edit-td-content">
+          <nz-date-picker [(ngModel)]="data['StartDate']" (ngModelChange)="onTimeChange()"></nz-date-picker>
+        </td>
+        <td class="edit-td-title">结束日期</td>
+        <td class="edit-td-content">
+          <nz-date-picker nzDisabled [(ngModel)]="data['EndDate']"></nz-date-picker>
+        </td>
+      </tr>
+      <tr>
+        <td class="edit-td-title">请假原因</td>
+        <td class="edit-td-content" colspan="3">
+          <textarea rows="3" nz-input [(ngModel)]="data['Reason']"></textarea>
+        </td>
+      </tr>
+      <tr>
+        <td class="edit-td-title">备注</td>
+        <td class="edit-td-content" colspan="3">
+          <textarea rows="3" nz-input [(ngModel)]="data['Remark']"></textarea>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="edit-footer">
+    <button nz-button (click)="cancel();" nzType="default">取 消</button>
+    <button nz-button [nzLoading]="isLoading" (click)="handleOk();" nzType="primary">提 交</button>
+  </div>
+</div>

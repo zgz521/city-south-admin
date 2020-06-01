@@ -56,11 +56,18 @@
             [ngModel]="(data['waterAndE']['Quantity'] - data['waterAndE']['LastQuantity']).toFixed(2)"
             [disabled]="true" />
         </td>
+        <td class="edit-td-title">分摊表量</td>
+        <td class="edit-td-content">
+          <input nz-input placeholder="分摊表量" [(ngModel)]="data['waterAndE']['ShareQuantity']" [disabled]="true" />
+        </td>
+      </tr>
+      <tr>
         <td class="edit-td-title">应缴金额</td>
         <td class="edit-td-content">
-          <input nz-input placeholder="应缴金额" [(ngModel)]="data['waterAndE']['Amount']"
-            [disabled]="true" />
+          <input nz-input placeholder="应缴金额" [(ngModel)]="data['waterAndE']['Amount']" [disabled]="true" />
         </td>
+        <td class="edit-td-title">缴费时间</td>
+        <td class="edit-td-content">{{data['waterAndE']['CreateTime'] | date:'yyyy-MM-dd HH:mm'}}</td>
       </tr>
       <tr>
         <td class="edit-td-title">收据号码</td>

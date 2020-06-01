@@ -1,0 +1,62 @@
+<div class="list-title">车主管理</div>
+<div class="list-search">
+  <nz-select style="width:200px;" nzShowSearch nzAllowClear nzPlaceHolder="选择项目" [(ngModel)]="selectData['FkId']">
+    <nz-option *ngFor="let estateItem of estatelist" [nzLabel]="estateItem['EstateName']"
+      [nzValue]="estateItem['EstateId']"></nz-option>
+  </nz-select>
+  <nz-date-picker nzPlaceHolder="停车费到期截止时间" [(ngModel)]="selectData['SearchDate']"></nz-date-picker>
+  <div class="input-search">
+    <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
+      <input type="text" [(ngModel)]="selectData['KeyWord']" nz-input placeholder="关键字" />
+    </nz-input-group>
+    <ng-template #suffixIconButton>
+      <nz-button-group nzSearch>
+        <button class="export-search" nz-button nzType="primary" (click)="search()"><i nz-icon
+            nzType="search"></i></button>
+        <button nz-button nzType="primary" (click)="export()"><i nz-icon nzType="export"></i></button>
+      </nz-button-group>
+    </ng-template>
+  </div>
+</div>
+<nz-table class="table-list" #headerTable [nzData]="datalist" [nzTotal]="TotalCount" [(nzPageIndex)]="PageIndex"
+  [(nzPageSize)]="PageSize" [nzShowSizeChanger]="true" [nzPageSizeOptions]="[10, 15, 20]" [nzLoading]="isLoading"
+  [nzBordered]="false" [nzFrontPagination]="false" (nzPageIndexChange)="getlist()" (nzPageSizeChange)="getlist()">
+  <thead>
+    <tr>
+      <th nzAlign="center" nzWidth="50px">序号</th>
+      <th nzAlign="center" nzWidth="100px">项目名称</th>
+      <th nzAlign="center" nzWidth="100px">房号</th>
+      <th nzAlign="center" nzWidth="80px">业主姓名</th>
+      <th nzAlign="center" nzWidth="100px">常住人姓名</th>
+      <th nzAlign="center" nzWidth="90px">车辆使用人</th>
+      <th nzAlign="center" nzWidth="100px">使用人电话</th>
+      <th nzAlign="center" nzWidth="80px">品牌</th>
+      <th nzAlign="center" nzWidth="80px">型号</th>
+      <th nzAlign="center" nzWidth="100px">车牌</th>
+      <th nzAlign="center" nzWidth="100px">停车费到期日</th>
+      <th nzAlign="center">备注</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let item of headerTable.data; let no = index;">
+      <td nzAlign="center">{{(PageIndex - 1) * PageSize + no + 1}}</td>
+      <td nzAlign="center">
+        <div class="remark" style="width: 84px;" nz-tooltip [nzTooltipTitle]="item['EstateName']">
+          {{item['EstateName']}}</div>
+      </td>
+      <td nzAlign="center">{{item['HouseNo']}}</td>
+      <td nzAlign="center">{{item['OwnerName']}}</td>
+      <td nzAlign="center">
+        <div class="remark" style="width: 84px;" nz-tooltip [nzTooltipTitle]="item['CheckInName']">
+          {{item['CheckInName']}}</div>
+      </td>
+      <td nzAlign="center">{{item['car']['UserName']}}</td>
+      <td nzAlign="center">{{item['car']['Phone']}}</td>
+      <td nzAlign="center">{{item['car']['Brand']}}</td>
+      <td nzAlign="center">{{item['car']['Model']}}</td>
+      <td nzAlign="center">{{item['car']['CarNumber']}}</td>
+      <td nzAlign="center">{{item['car']['ParkingExpireDate'] | date:'yyyy-MM-dd'}}</td>
+      <td nzAlign="center">{{item['car']['Remark']}} </td>
+    </tr>
+  </tbody>
+</nz-table>
