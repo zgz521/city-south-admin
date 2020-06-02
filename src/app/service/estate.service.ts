@@ -19,17 +19,22 @@ export class EstateService {
     return this.http.get(url);
   }
 
-  add(data: any){
+  add(data: any) {
     let url = this.uri + '/api/estate/add';
     return this.http.post(url, data);
   }
 
-  modify(data: any){
+  modify(data: any) {
     let url = this.uri + '/api/estate/modify';
     return this.http.put(url, data);
   }
 
-  delete(id: number){
+  changeIntroduct(data: any) {
+    let url = this.uri + '/api/estate/changeintroduct';
+    return this.http.put(url, data);
+  }
+
+  delete(id: number) {
     let url = this.uri + '/api/estate/delete/' + id.toString();
     return this.http.delete(url);
   }

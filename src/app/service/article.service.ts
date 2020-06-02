@@ -9,24 +9,29 @@ export class ArticleService {
 
   constructor(private http: HttpClient, @Inject(API_CONFIG) private uri: string) { }
 
-  getlist(selectData:any, PageSize: number, PageIndex: number) {
+  getlist(selectData: any, PageSize: number, PageIndex: number) {
     selectData['PageSize'] = PageSize;
     selectData['PageIndex'] = PageIndex;
     let url = this.uri + '/api/article';
     return this.http.post(url, selectData);
   }
 
-  add(data: any){
+  add(data: any) {
     let url = this.uri + '/api/article/add';
     return this.http.post(url, data);
   }
 
-  modify(data: any){
+  changeShow(data: any) {
+    let url = this.uri + '/api/article/changeshow';
+    return this.http.put(url, data);
+  }
+
+  modify(data: any) {
     let url = this.uri + '/api/article/modify';
     return this.http.put(url, data);
   }
 
-  delete(id: number){
+  delete(id: number) {
     let url = this.uri + '/api/article/delete/' + id.toString();
     return this.http.delete(url);
   }

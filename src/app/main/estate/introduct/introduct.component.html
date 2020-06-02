@@ -1,0 +1,8 @@
+<div [style.max-height]="divHeight" [style.width]="divWidth" style="overflow-y: auto;">
+    <ckeditor [editor]="Editor" [(ngModel)]="data['Introduct']">
+    </ckeditor>
+    <div style="margin-top: 10px; text-align: right;">
+        <button nz-button nzType="default" (click)="close()">关闭</button>
+        <button style="margin-left: 10px;" nz-button nzType="primary" (click)="save()">保存</button>
+    </div>
+</div>

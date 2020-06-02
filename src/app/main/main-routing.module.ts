@@ -52,6 +52,7 @@ import { CarComponent } from './car/car.component';
 import { LeaveComponent } from './leave/leave.component';
 import { AddEditComponent as LeaveAddEditComponent } from './leave/add-edit/add-edit.component';
 import { AddEditComponent as ArticleAddEditComponent } from './article/add-edit/add-edit.component';
+import { IntroductComponent as EstateIntroductComponent } from './estate/introduct/introduct.component';
 
 const routes: Routes = [
   {
@@ -60,7 +61,7 @@ const routes: Routes = [
     children: [
       { path: 'index', component: IndexComponent },
       //房产
-      { path: 'estate', component: EstateComponent, children: [] },
+      { path: 'estate', component: EstateComponent, children: [{ path: 'introduct', component: EstateIntroductComponent }] },
       { path: 'house', component: HouseComponent, children: [{ path: 'add-edit', component: HouseAddEditComponent }, { path: 'add-batch', component: HouseAddBatchComponent }] },
       { path: 'owner', component: OwnerComponent, children: [{ path: 'add-edit', component: OwnerAddEditComponent }] },
       { path: 'car', component: CarComponent },
@@ -83,7 +84,7 @@ const routes: Routes = [
       { path: 'storage-out', component: StorageOutComponent },
       { path: 'storage-check', component: StorageCheckComponent },
       //业主
-      { path: 'article', component: ArticleComponent , children: [{ path: 'add-edit', component: ArticleAddEditComponent }]},
+      { path: 'article', component: ArticleComponent, children: [{ path: 'add-edit', component: ArticleAddEditComponent }] },
       { path: 'complain', component: ComplainComponent },
       { path: 'repair', component: RepairComponent },
       //设置

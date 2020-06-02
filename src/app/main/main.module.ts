@@ -54,6 +54,7 @@ import { LeaveComponent } from './leave/leave.component';
 import { AddEditComponent as LeaveAddEditComponent } from './leave/add-edit/add-edit.component';
 import { AddEditComponent as ArticleAddEditComponent } from './article/add-edit/add-edit.component';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
+import { IntroductComponent as EstateIntroductComponent } from './estate/introduct/introduct.component';
 
 @NgModule({
   declarations: [
@@ -108,7 +109,8 @@ import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
     CarComponent,
     LeaveComponent,
     LeaveAddEditComponent,
-    ArticleAddEditComponent
+    ArticleAddEditComponent,
+    EstateIntroductComponent
   ],
   imports: [
     ShareModule,

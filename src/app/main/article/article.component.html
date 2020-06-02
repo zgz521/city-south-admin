@@ -18,10 +18,11 @@
       <th nzAlign="center" nzWidth="50px">序号</th>
       <th nzAlign="center" nzWidth="100px">分类</th>
       <th nzAlign="center" nzWidth="200px">标题</th>
-      <th nzAlign="center" nzWidth="100px">跳转</th>
+      <th nzAlign="center" nzWidth="150px">跳转</th>
       <th nzAlign="center" nzWidth="80px">点击</th>
       <th nzAlign="center" nzWidth="80px">显示</th>
-      <th nzAlign="center" nzWidth="120px">时间</th>
+      <th nzAlign="center" nzWidth="130px">时间</th>
+      <th nzAlign="center" nzWidth="120px">项目</th>
       <th nzAlign="center">处理</th>
     </tr>
   </thead>
@@ -33,10 +34,19 @@
         <div class="remark" style="width: 184px;" nz-tooltip [nzTooltipTitle]="item['Title']">
           {{item['Title']}}</div>
       </td>
-      <td nzAlign="center">{{item['GoUrl']}}</td>
+      <td nzAlign="left">
+        <div class="remark" style="width: 134px;" nz-tooltip [nzTooltipTitle]="item['GoUrl']">
+          {{item['GoUrl']}}</div>
+      </td>
       <td nzAlign="center">{{item['Click']}}</td>
-      <td nzAlign="center">{{item['IsShow']}}</td>
-      <td nzAlign="center">{{item['AddTime'] | date:'yyyy-MM-dd'}}</td>
+      <td nzAlign="center">
+        <nz-switch [(ngModel)]="item['IsShow']" (ngModelChange)="changeShow(item['ArticleId'], $event)"></nz-switch>
+      </td>
+      <td nzAlign="center">{{item['AddTime'] | date:'yyyy-MM-dd HH:mm'}}</td>
+      <td nzAlign="left">
+        <div class="remark" style="width: 184px;" nz-tooltip [nzTooltipTitle]="item['EstateNames']">
+          {{item['EstateNames']}}</div>
+      </td>
       <td nzAlign="center">
         <a (click)="addEdit(no)"><i nz-icon nzType="edit" nzTheme="outline"></i></a>
         <nz-divider nzType="vertical"></nz-divider>

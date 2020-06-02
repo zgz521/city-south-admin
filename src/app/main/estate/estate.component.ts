@@ -1,7 +1,8 @@
 import { Component, OnInit, ElementRef, ViewChild, HostListener } from '@angular/core';
-import { NzInputDirective } from 'ng-zorro-antd';
+import { NzInputDirective, NzModalService } from 'ng-zorro-antd';
 import { OprationService } from 'src/app/service/opration.service';
 import { EstateService } from 'src/app/service/estate.service';
+import { IntroductComponent } from './introduct/introduct.component';
 
 @Component({
   selector: 'app-estate',
@@ -23,7 +24,7 @@ export class EstateComponent implements OnInit {
     }
   }
 
-  editRow(){
+  editRow() {
     this.estateService.modify(this.datalist[this.editIndex]).subscribe(result => {
       this.oprationService.tips(result);
     });
@@ -37,6 +38,29 @@ export class EstateComponent implements OnInit {
       if (result['code'] == 'success') {
         this.getList();
       }
+    });
+  }
+
+  editIntroduct(data: any): void {
+    let width = window.innerWidth - 200;
+    if (width > 800)
+      width = 800;
+    let marginLeft = ((window.innerWidth - width) / 2) + 'px';
+    const modal = this.modalService.create({
+      nzTitle: '编辑“' + data['EstateName'] + '”的简介',
+      nzContent: IntroductComponent,
+      nzComponentParams: {
+        data: data
+      },
+      nzMaskClosable: false,
+      nzFooter: null,
+      nzWidth: width,
+      nzStyle: { position: 'absolute', top: '100px', left: marginLeft }
+    });
+    modal.afterOpen.subscribe(function () {
+      modal.getContentComponent().closed.subscribe(function () {
+        modal.close();
+      });
     });
   }
 
@@ -58,14 +82,14 @@ export class EstateComponent implements OnInit {
   startEdit(index: number, colIndex: number, event: MouseEvent): void {
     event.preventDefault();
     event.stopPropagation();
-    if(this.editIndex > -1 && this.editIndex !== index){
+    if (this.editIndex > -1 && this.editIndex !== index) {
       this.editRow();
     }
     this.editIndex = index;
     this.colIndex = colIndex;
   }
 
-  constructor(private estateService: EstateService, private oprationService: OprationService) { }
+  constructor(private estateService: EstateService, private oprationService: OprationService, private modalService: NzModalService) { }
 
   ngOnInit(): void {
     this.getList();

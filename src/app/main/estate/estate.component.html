@@ -145,6 +145,10 @@
         <a nz-popconfirm nzTitle="确定要删除“{{data['EstateName']}}”小区吗?" (nzOnConfirm)="deleteRow(data['EstateId'])">
           <i nz-icon nzType="delete" nzTheme="outline"></i>
         </a>
+        <nz-divider nzType="vertical"></nz-divider>
+        <a (click)="editIntroduct(data)">
+          <span nz-tooltip nzTooltipTitle="编辑简介"><i nz-icon nzType="file-text" nzTheme="outline"></i></span>
+        </a>
       </td>
     </tr>
   </tbody>
