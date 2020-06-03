@@ -10,8 +10,7 @@ import { GoodsService } from 'src/app/service/goods.service';
 export class AddEditComponent implements OnInit {
 
   @Input() data: object;
-  @Input() category: any[];
-  @Input() categoryNames: any;
+  @Input() estates: any[];
   @Output() closed = new EventEmitter();
   @Output() submitOk = new EventEmitter();
   divHeight = (window.innerHeight - 303) + 'px';

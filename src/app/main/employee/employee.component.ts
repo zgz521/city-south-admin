@@ -14,7 +14,7 @@ export class EmployeeComponent implements OnInit {
 
   datalist: Array<object>;
   estatelist: Array<object>;
-  estateNamse: any = {};
+  estateNames: any = {};
   postlist: Array<object>;
   postNames: any = {};
   category = [];
@@ -133,7 +133,7 @@ export class EmployeeComponent implements OnInit {
       this.estatelist = result['datalist'];
       this.estatelist.splice(0, 0, {EstateId: 0, EstateName: '总公司'});
       this.estatelist.forEach(item => {
-        this.estateNamse[item['EstateId']] = item['EstateName'];
+        this.estateNames[item['EstateId']] = item['EstateName'];
       });
     });
   }

@@ -19,13 +19,12 @@
   <thead>
     <tr>
       <th nzAlign="center" nzWidth="50px">序号</th>
-      <th nzAlign="center" nzWidth="100px">物资编号</th>
-      <th nzAlign="left" nzWidth="100px">物资名称</th>
+      <th nzAlign="center" nzWidth="160px">物资编号</th>
+      <th nzAlign="center" nzWidth="120px">物资名称</th>
       <th nzAlign="center" nzWidth="160px">物资分类</th>
-      <th nzAlign="center" nzWidth="100px">型号</th>
-      <th nzAlign="center" nzWidth="100px">单位名称</th>
+      <th nzAlign="center" nzWidth="120px">型号</th>
       <th nzAlign="center" nzWidth="100px">单价</th>
-      <th nzAlign="center" nzRight="0px">编辑</th>
+      <th nzAlign="center">编辑</th>
     </tr>
   </thead>
   <tbody>
@@ -33,14 +32,13 @@
       <td nzAlign="center">{{(PageIndex - 1) * PageSize + no + 1}}</td>
       <td nzAlign="center">{{item['GoodsNo']}}</td>
       <td nzAlign="center">{{item['GoodsName']}}</td>
-      <td nzAlign="left">
+      <td nzAlign="center">
         <div class="remark" style="width: 144px;" nz-tooltip [nzTooltipTitle]="categoryNames[item['CategoryId']]">
           {{categoryNames[item['CategoryId']]}}</div>
       </td>
       <td nzAlign="center">{{item['Model']}}</td>
-      <td nzAlign="center">{{item['UnitName']}}</td>
-      <td nzAlign="center">{{item['UnitPrice']}}</td>
-      <td nzAlign="center" nzRight="0px">
+      <td nzAlign="center">{{item['UnitPrice']}}{{item['UnitName']}}</td>
+      <td nzAlign="center">
         <a (click)="addEdit(no)"><i nz-icon nzType="edit" nzTheme="outline"></i></a>
         <nz-divider nzType="vertical"></nz-divider>
         <a (click)="delete(item['GoodsId'])"><i nz-icon nzType="delete" nzTheme="outline"></i></a>

@@ -11,9 +11,9 @@ import { OprationService } from 'src/app/service/opration.service';
 export class AddEditComponent implements OnInit {
 
   @Input() data: object;
+  @Input() roles: Array<object>;
+  @Input() estates: Array<object>;
   @Output() closed = new EventEmitter();
-  @Output() roles: Array<object>;
-  @Output() estates: Array<object>;
   validateForm: FormGroup;
   isVerfyPassword = false;
   passwordVisible = false;

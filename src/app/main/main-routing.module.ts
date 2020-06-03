@@ -53,6 +53,7 @@ import { LeaveComponent } from './leave/leave.component';
 import { AddEditComponent as LeaveAddEditComponent } from './leave/add-edit/add-edit.component';
 import { AddEditComponent as ArticleAddEditComponent } from './article/add-edit/add-edit.component';
 import { IntroductComponent as EstateIntroductComponent } from './estate/introduct/introduct.component';
+import { AddEditComponent as StorageInAddEditComponent } from './storage-in/add-edit/add-edit.component';
 
 const routes: Routes = [
   {
@@ -80,7 +81,7 @@ const routes: Routes = [
       { path: 'goods-category', component: GoodsCategoryComponent, children: [{ path: 'add-edit', component: GoodsCategoryAddEditComponent }] },
       { path: 'goods', component: GoodsComponent, children: [{ path: 'add-edit', component: GoodsAddEditComponent }] },
       { path: 'storage', component: StorageComponent },
-      { path: 'storage-in', component: StorageInComponent },
+      { path: 'storage-in', component: StorageInComponent, children: [{path : 'add-edit', component: StorageInAddEditComponent}] },
       { path: 'storage-out', component: StorageOutComponent },
       { path: 'storage-check', component: StorageCheckComponent },
       //业主

@@ -64,7 +64,6 @@ export class GoodsComponent implements OnInit {
       console.log(this.categorylist);
       this.category = [];
       this.generateCategory(null);
-      console.log(this.category);
     });
   }
 
